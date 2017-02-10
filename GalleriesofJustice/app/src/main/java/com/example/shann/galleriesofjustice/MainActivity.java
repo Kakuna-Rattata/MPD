@@ -1,5 +1,6 @@
 package com.example.shann.galleriesofjustice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -81,12 +82,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_exhibitions) {
+
+        } else if (id == R.id.nav_events) {
+
         } else if (id == R.id.nav_map) {
 
         } else if (id == R.id.nav_tour) {
 
         } else if (id == R.id.nav_achievements) {
+
+        } else if (id == R.id.nav_help) {
+
+        } else if (id == R.id.nav_settings) {
+
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_feedback) {
 
         }
 

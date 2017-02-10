@@ -36,13 +36,13 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.35"/>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.22">
+            android:layout_weight="0.06">
 
             <Space
                 android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             <Button
                 android:text="Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="116dp"
                 android:id="@+id/button"
                 android:layout_weight="1" />
 

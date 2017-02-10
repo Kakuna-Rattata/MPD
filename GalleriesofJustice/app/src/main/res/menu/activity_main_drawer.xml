@@ -46,6 +46,14 @@
             android:title="About" />
     </group>
 
+    <group android:id="@+id/menu_social" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_feedback"
+            android:title="Send Feedback" />
+    </group>
+
+
+
 <!--    <item android:title="Communicate">
         <menu>
             <item
