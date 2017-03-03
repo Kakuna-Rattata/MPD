@@ -21,8 +21,6 @@ import android.content.Intent;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
-import com.estimote.sdk.connection.internal.protocols.Operation;
-
 
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +41,7 @@ public class MyApplication extends Application {
                 beaconManager.startMonitoring(new Region(
                         "monitored region",
                         UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-                        22504, 48827));
+                        18129, 1432));
             }
         });
 
