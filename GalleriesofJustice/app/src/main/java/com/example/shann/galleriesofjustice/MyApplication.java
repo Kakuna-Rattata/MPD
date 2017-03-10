@@ -24,8 +24,6 @@ import java.util.UUID;
  * http://developer.estimote.com/android/tutorial/part-1-setting-up/#prerequisites
  *
  * https://cloud.estimote.com/#/
- *
- * https://community.estimote.com/hc/en-us/articles/206851847-I-cannot-see-my-beacons-in-Estimote-Cloud-dashboard-How-do-I-add-them-?utm_source=Beacons%20Blank%20Slate&utm_medium=referral&utm_content=Transfer%20Beacons&utm_campaign=Cloud
  */
 
 /* Application: Base class for those who need to maintain global application state.
@@ -42,10 +40,10 @@ public class MyApplication extends Application {
             "All beacons",
             UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
             null, null);    //  Target entire groups of beacons by setting the major and/or minor to null.
-    final  Region regionCandy = new Region(
-            "Candy beacon",
+    final  Region regionLemon = new Region(
+            "Lemon beacon",
             UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),
-            17236, 25458);  // iBeacon format Major, minor values to identify particular beacon
+            28651, 37405);  // iBeacon format Major, minor values to identify particular beacon
 
     @Override
     public void onCreate() {
@@ -66,7 +64,7 @@ public class MyApplication extends Application {
             @Override
             public void onServiceReady() {
                 beaconManager.startMonitoring(regionAll);
-                beaconManager.startMonitoring(regionCandy);
+                beaconManager.startMonitoring(regionLemon);
             }
         });
 
@@ -76,17 +74,17 @@ public class MyApplication extends Application {
 
                 if (region == regionAll) {
                     showNotification(
-                            "Welcome to The Galleries of Justice Museum", // Title
-                            "Come inside and try our new interactive tour!",  // Message
-                            MainActivity.class
+                            "Welcome to The Galleries of Justice Museum",       // Title
+                            "Come inside and try our new interactive tour!",    // Message
+                            MainActivity.class                                  // Open on tap
                     );
 
                     Log.d("monitoring: enter", region.toString());
                 }
-                else if (region == regionCandy) {
+                else if (region == regionLemon) {
                     showNotification(
-                            "Convict Ship", // Title
-                            "check out this exhibit",   // Message
+                            "Convict Ship",
+                            "Check out this exhibit",
                             ExhibitActivity.class
                     );
 
