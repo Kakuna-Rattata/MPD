@@ -5,19 +5,34 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class ExhibitActivity extends AppCompatActivity {
 
-    private static final String TAG = "Lifecycle: ";
+    private static final String TAG = "ExhibitActivity: ";
 
-    private ImageView imageView;
+    ImageView imageView;
+    TextView textViewTitle;
+    TextView textViewDesc;
+
+    //  Declare Firebase Database elements:
+    private static final String FIREBASE_URL = "https://galleriesofjustice-a9d86.firebaseio.com/";
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference dbRootRef = database.getReference();
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    String beaconKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +41,63 @@ public class ExhibitActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate() called");
 
-        // Reference to an image file in Firebase Storage
-        StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
-
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
+        textViewTitle = (TextView) findViewById(R.id.textView_title);
+        textViewDesc = (TextView) findViewById(R.id.textView_desc);
+
+        //  Get beaconKey passed from triggering Activity/Notification :
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            beaconKey = extras.getString("beaconKey");
+        }
+        Log.d(TAG, "beaconKey is: " + beaconKey);
+
+        // Reference to an image file in Firebase Storage
+        final StorageReference storageRef = storage.getReference();
+        final StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
+
+        //String imageName = "";
+        //  Query db for page content :
+        dbRootRef.child(beaconKey).addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String imgName = null, title = null, desc = null;
+                if (dataSnapshot.getValue() != null) {
+
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        if (child.getKey().equals("image")) {
+                            imgName = child.getValue().toString();
+                        }
+                        if (child.getKey().equals("title")) {
+                            title = child.getValue().toString();
+                        }
+                        if (child.getKey().equals("desc")) {
+                            desc = child.getValue().toString();
+                        }
+                    }
+
+                    Glide.with(getApplicationContext() /* context */)
+                            .using(new FirebaseImageLoader())
+                            .load(imagesRef.child(imgName))
+                            .into(imageView);
+
+                    textViewTitle.setText(title.toString());
+                    //textViewDesc.setText(desc.toString());
+                }
+            }
+
+                @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
 
         // Load the image using Glide
         Glide.with(this /* context */)
                 .using(new FirebaseImageLoader())
-                .load(imagesRef.child("goj_courtroom_.jpg"))
+                .load(imagesRef.child("goj_courtroom.jpg"))
                 .into(imageView);
     }
 
