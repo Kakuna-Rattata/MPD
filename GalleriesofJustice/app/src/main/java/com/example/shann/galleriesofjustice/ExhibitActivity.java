@@ -1,5 +1,6 @@
 package com.example.shann.galleriesofjustice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -44,5 +45,12 @@ public class ExhibitActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 }

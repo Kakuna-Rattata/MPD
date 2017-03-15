@@ -33,7 +33,7 @@ public class MyApplication extends Application {
     private BeaconManager beaconManager;
 
     long scanDurInterval = 5000;
-    long scanWaitInterval = 5000;
+    long scanWaitInterval = 3000;
 
     /*  Estimote Region definitions for iBeacon Ranging :   */
     final Region regionAll = new Region(
@@ -71,8 +71,8 @@ public class MyApplication extends Application {
             @Override
             public void onServiceReady() {
                 beaconManager.startMonitoring(regionAll);
-                beaconManager.startMonitoring(regionLemon);
-                beaconManager.startMonitoring(regionBeetroot);
+                //beaconManager.startMonitoring(regionLemon);
+                //beaconManager.startMonitoring(regionBeetroot);
             }
         });
 
@@ -96,6 +96,9 @@ public class MyApplication extends Application {
                             mainIntent
                             //MainActivity.class                                  // Open on tap
                     );
+
+                    beaconManager.startMonitoring(regionLemon);
+                    beaconManager.startMonitoring(regionBeetroot);
                 }
                 else {
 
