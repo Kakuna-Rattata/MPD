@@ -82,8 +82,8 @@ public class ExhibitActivity extends AppCompatActivity {
                             .load(imagesRef.child(imgName))
                             .into(imageView);
 
-                    textViewTitle.setText(title.toString());
-                    //textViewDesc.setText(desc.toString());
+                    textViewTitle.setText(title);
+                    textViewDesc.setText(desc);
                 }
             }
 
@@ -93,12 +93,6 @@ public class ExhibitActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
-
-        // Load the image using Glide
-        Glide.with(this /* context */)
-                .using(new FirebaseImageLoader())
-                .load(imagesRef.child("goj_courtroom.jpg"))
-                .into(imageView);
     }
 
     @Override
