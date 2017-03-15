@@ -4,10 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ExhibitActivity extends AppCompatActivity {
 
     private static final String TAG = "Lifecycle: ";
+
+    private ImageView imageView;
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +25,18 @@ public class ExhibitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exhibit_activity);
 
         Log.d(TAG, "onCreate() called");
+
+        // Reference to an image file in Firebase Storage
+        StorageReference storageRef = storage.getReference();
+        StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
+
+        imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
+
+        // Load the image using Glide
+        Glide.with(this /* context */)
+                .using(new FirebaseImageLoader())
+                .load(imagesRef.child("goj_courtroom_.jpg"))
+                .into(imageView);
     }
 
     @Override
