@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView_title"
             android:layout_weight="0.07"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView_desc"
             android:layout_weight="0.15"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <Space
             android:layout_width="match_parent"

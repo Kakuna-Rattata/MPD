@@ -63,7 +63,7 @@ public class ExhibitActivity extends AppCompatActivity {
         final StorageReference storageRef = storage.getReference();
         final StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
 
-        //String imageName = "";
+        final Exhibit exhibit = new Exhibit();
         //  Query db for page content :
         dbRootRef.child(beaconKey).addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -72,15 +72,20 @@ public class ExhibitActivity extends AppCompatActivity {
                 String imgName = null, title = null, desc = null;
                 if (dataSnapshot.getValue() != null) {
 
+                    exhibit.setKey(beaconKey);
+
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         if (child.getKey().equals("image")) {
                             imgName = child.getValue().toString();
+                            exhibit.setImage(imgName);
                         }
                         if (child.getKey().equals("title")) {
                             title = child.getValue().toString();
+                            exhibit.setTitle(title);
                         }
                         if (child.getKey().equals("desc")) {
                             desc = child.getValue().toString();
+                            exhibit.setDesc(desc);
                         }
                     }
 
@@ -108,7 +113,7 @@ public class ExhibitActivity extends AppCompatActivity {
                 Intent quizIntent = new Intent(getApplicationContext(), QuizActivity.class);
                 quizIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 quizIntent.putExtra("beaconKey", beaconKey);
-                //quizIntent.putExtra("ExhibitObject", Exhibit);
+                quizIntent.putExtra("ExhibitObj", exhibit);
 
                 startActivityForResult(quizIntent, REQUEST_CODE);
             }

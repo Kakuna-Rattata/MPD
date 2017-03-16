@@ -10,24 +10,32 @@ import android.widget.TextView;
 
 public class QuizActivity extends AppCompatActivity {
 
-    TextView textViewTitle;
+    TextView textViewQuestion;
     ListView listViewAnswers;
     Button btnPrev;
     Button btnNext;
 
     Bundle extras;
 
+    Exhibit exhibit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        textViewTitle = (TextView) findViewById(R.id.textView_title) ;
+        textViewQuestion = (TextView) findViewById(R.id.textView_question) ;
         listViewAnswers = (ListView) findViewById(R.id.listViewAnswers);
         btnPrev = (Button) findViewById(R.id.btn_prev);
         btnNext = (Button) findViewById(R.id.btn_next);
 
+        exhibit = new Exhibit();
+        exhibit = (Exhibit) getIntent().getSerializableExtra("ExhibitObj");
 
+        setTitle(exhibit.getTitle().toString() + " Quiz");
+
+
+        textViewQuestion.setText(exhibit.getTitle().toString());
     }
 
     @Override
