@@ -1,9 +1,13 @@
 package com.example.shann.galleriesofjustice;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +24,12 @@ import com.google.firebase.storage.StorageReference;
 public class ExhibitActivity extends AppCompatActivity {
 
     private static final String TAG = "ExhibitActivity: ";
+    public static final int REQUEST_CODE = 1;
 
     ImageView imageView;
     TextView textViewTitle;
     TextView textViewDesc;
+    Button buttonQuiz;
 
     //  Declare Firebase Database elements:
     private static final String FIREBASE_URL = "https://galleriesofjustice-a9d86.firebaseio.com/";
@@ -44,6 +50,7 @@ public class ExhibitActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
         textViewTitle = (TextView) findViewById(R.id.textView_title);
         textViewDesc = (TextView) findViewById(R.id.textView_desc);
+        buttonQuiz = (Button) findViewById(R.id.btn_Quiz);
 
         //  Get beaconKey passed from triggering Activity/Notification :
         Bundle extras = getIntent().getExtras();
@@ -93,6 +100,19 @@ public class ExhibitActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
+
+        buttonQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent quizIntent = new Intent(getApplicationContext(), QuizActivity.class);
+                quizIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                quizIntent.putExtra("beaconKey", beaconKey);
+                //quizIntent.putExtra("ExhibitObject", Exhibit);
+
+                startActivityForResult(quizIntent, REQUEST_CODE);
+            }
+        });
     }
 
     @Override
@@ -130,5 +150,35 @@ public class ExhibitActivity extends AppCompatActivity {
         super.onBackPressed();
 
         getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Bundle extras = getIntent().getExtras();
+        outState.putAll(extras);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+
+        beaconKey = savedInstanceState.getString("beaconKey");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_CODE) {
+
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("beaconKey");
+                // do something with the result
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // some stuff that will happen if there's no result
+            }
+        }
     }
 }

@@ -26,6 +26,15 @@
             android:name=".ExhibitActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity
+            android:name=".QuizActivity"
+            android:parentActivityName=".ExhibitActivity"
+            android:label="Quiz"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shann.galleriesofjustice.ExhibitActivity" />
+        </activity>
     </application>
 
 </manifest>

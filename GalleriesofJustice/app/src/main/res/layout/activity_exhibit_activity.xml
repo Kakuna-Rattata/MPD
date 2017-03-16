@@ -21,7 +21,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="269dp"
-            android:id="@+id/imageView_Exhibit" />
+            android:id="@+id/imageView_Exhibit"
+            android:scaleType="centerCrop" />
 
         <Space
             android:layout_width="match_parent"
@@ -41,6 +42,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView_desc"
             android:layout_weight="0.15"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Take Quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Quiz"
             android:textSize="18sp" />
 
     </LinearLayout>

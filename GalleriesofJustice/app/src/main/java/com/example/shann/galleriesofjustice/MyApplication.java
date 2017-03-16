@@ -1,5 +1,6 @@
 package com.example.shann.galleriesofjustice;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -14,7 +15,10 @@ import com.estimote.sdk.Region;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /*
@@ -64,7 +68,8 @@ public class MyApplication extends Application {
 
         /*  iBeacon Monitoring :    */
         beaconManager = new BeaconManager(getApplicationContext());
-        beaconManager.setBackgroundScanPeriod(scanDurInterval, scanWaitInterval);   // Set enter/exit event trigger duration and wait time to 5 seconds
+        beaconManager.setBackgroundScanPeriod(scanDurInterval, scanWaitInterval);
+        // Set enter/exit event trigger duration and wait time to 5 seconds
 
         // Create a beacon region defining monitoring geofence :
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
@@ -93,39 +98,43 @@ public class MyApplication extends Application {
                     showNotification(
                             "Welcome to The Galleries of Justice Museum",       // Title
                             "Come inside and try our new interactive tour!",    // Message
-                            mainIntent
-                            //MainActivity.class                                  // Open on tap
+                            mainIntent                                          // Open on tap
                     );
 
                     beaconManager.startMonitoring(regionLemon);
                     beaconManager.startMonitoring(regionBeetroot);
                 }
                 else {
-
                     //  Trigger Exhibit Activity, provide region's MM key
                     Intent exhibitIntent = new Intent(getApplicationContext(), ExhibitActivity.class);
                     exhibitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     exhibitIntent.putExtra("beaconKey", beaconKey);
-                    startActivity(exhibitIntent);
 
-                    if (region == regionLemon) {
+                    //getApplicationContext().getClass() != MainActivity.class
+                    if ( getActivity().getClass() != (QuizActivity.class) )  {
 
-                        showNotification(
-                                "Prison Cells",
-                                "Check out this exhibit",
-                                exhibitIntent
-                                //ExhibitActivity.class
-                        );
-                    } else if (region == regionBeetroot) {
-
-                        showNotification(
-                                "Courtroom",
-                                "Check out this exhibit",
-                                exhibitIntent
-                                //ExhibitActivity.class
-                        );
-
+                        startActivity(exhibitIntent);
                     }
+                    else {
+
+                        if (region == regionLemon) {
+
+                            showNotification(
+                                    "Prison Cells",
+                                    "Check out this exhibit",
+                                    exhibitIntent
+                            );
+                        } else if (region == regionBeetroot) {
+
+                            showNotification(
+                                    "Courtroom",
+                                    "Check out this exhibit",
+                                    exhibitIntent
+                            );
+
+                        }
+                    }
+
                 }
             }
 
@@ -137,8 +146,7 @@ public class MyApplication extends Application {
                             "Thanks for visiting!",
                             "Feel free to leave Feedback",
                             mainIntent
-                            //MainActivity.class
-                            //TODO: Feedback activity
+                            //TODO: Feedback activity and replace above with
                     );
 
                     Log.d("monitoring: exit", region.toString());
@@ -150,11 +158,10 @@ public class MyApplication extends Application {
     /* Add a notification to show up whenever
      * user enters the range of our monitored beacon. */
     public void showNotification(String title, String message, Intent notificationIntent) {
-        //Class intentActivityClass
 
-        //Intent notificationIntent = new Intent(this, intentActivityClass);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivities(this, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivities(
+                this, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(this)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
@@ -169,4 +176,63 @@ public class MyApplication extends Application {
         notificationManager.notify(1, notification);
     }
 
+    public static Activity getActivity() {
+        Class activityThreadClass = null;
+        try {
+            activityThreadClass = Class.forName("android.app.ActivityThread");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Object activityThread = null;
+        try {
+            activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        Field activitiesField = null;
+        try {
+            activitiesField = activityThreadClass.getDeclaredField("mActivities");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        activitiesField.setAccessible(true);
+
+        Map<Object, Object> activities = null;
+        try {
+            activities = (Map<Object, Object>) activitiesField.get(activityThread);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if(activities == null)
+            return null;
+
+        for (Object activityRecord : activities.values()) {
+            Class activityRecordClass = activityRecord.getClass();
+            Field pausedField = null;
+            try {
+                pausedField = activityRecordClass.getDeclaredField("paused");
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+            pausedField.setAccessible(true);
+            try {
+                if (!pausedField.getBoolean(activityRecord)) {
+                    Field activityField = activityRecordClass.getDeclaredField("activity");
+                    activityField.setAccessible(true);
+                    Activity activity = (Activity) activityField.get(activityRecord);
+                    return activity;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
 }
