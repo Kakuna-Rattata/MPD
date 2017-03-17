@@ -111,11 +111,32 @@ public class MyApplication extends Application {
                     exhibitIntent.putExtra("beaconKey", beaconKey);
 
                     //getApplicationContext().getClass() != MainActivity.class
-                    if ( getActivity().getClass() != (QuizActivity.class) )  {
+                    if ( getActivity() != null ) {
 
-                        startActivity(exhibitIntent);
+                        if ( getActivity().getClass() != (QuizActivity.class) )  {
+
+                            startActivity(exhibitIntent);
+                        }
+                        else {
+
+                            if (region == regionLemon) {
+
+                                showNotification(
+                                        "Prison Cells",
+                                        "Check out this exhibit",
+                                        exhibitIntent
+                                );
+                            } else if (region == regionBeetroot) {
+
+                                showNotification(
+                                        "Courtroom",
+                                        "Check out this exhibit",
+                                        exhibitIntent
+                                );
+                            }
+                        }
                     }
-                    else {
+                    else {  //  Only trigger Activities when App is running in foreground, else use notification
 
                         if (region == regionLemon) {
 
@@ -131,7 +152,6 @@ public class MyApplication extends Application {
                                     "Check out this exhibit",
                                     exhibitIntent
                             );
-
                         }
                     }
 

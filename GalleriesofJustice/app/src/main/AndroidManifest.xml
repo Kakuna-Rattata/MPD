@@ -24,17 +24,17 @@
         </activity>
         <activity
             android:name=".ExhibitActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".QuizActivity"
-            android:parentActivityName=".ExhibitActivity"
             android:label="Quiz"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".ExhibitActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shann.galleriesofjustice.ExhibitActivity" />
         </activity>
+        <activity android:name=".QuizResultActivity"></activity>
     </application>
 
 </manifest>

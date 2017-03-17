@@ -17,6 +17,6 @@
         android:id="@+id/iv_headericon"
         android:layout_width="153dp"
         android:layout_height="84dp"
-        app:srcCompat="@mipmap/ic_goj"
+        app:srcCompat="@drawable/galleries_of_justice_logo"
         android:scaleType="centerCrop" />
 </LinearLayout>

@@ -14,53 +14,59 @@
     tools:showIn="@layout/app_bar_main">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="191dp"
-            app:srcCompat="@drawable/galleries_of_justice_logo"
-            android:id="@+id/img_GoJ"
-            android:scaleType="centerInside"
-            android:cropToPadding="false"
-            android:adjustViewBounds="false"
-            android:padding="@dimen/MainLogoPadding"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.35"/>
-
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.06">
+            android:weightSum="1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="191dp"
+                app:srcCompat="@drawable/galleries_of_justice_logo"
+                android:id="@+id/img_GoJ"
+                android:scaleType="centerInside"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false"
+                android:padding="@dimen/MainLogoPadding"/>
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="116dp"
-                android:id="@+id/button"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:text="Start Tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="116dp"
+                    android:id="@+id/btn_Tour"
+                    android:layout_weight="1" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
 </RelativeLayout>

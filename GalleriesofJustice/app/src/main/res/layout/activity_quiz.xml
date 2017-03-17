@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_quiz"
     android:layout_width="match_parent"
@@ -20,14 +21,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView_question"
-            android:layout_weight="0.38"
+            android:layout_weight="0.41"
             android:textSize="24sp" />
 
-        <ListView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="292dp"
-            android:layout_weight="0.53"
-            android:id="@+id/listViewAnswers" />
+            android:layout_height="wrap_content"
+            android:layout_weight="0.13" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="286dp"
+            android:id="@+id/radioGroup">
+
+            <RadioButton
+                android:text="RadioButton"
+                android:layout_width="357dp"
+                android:layout_height="94dp"
+                android:id="@+id/radioButtonA"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:text="RadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="94dp"
+                android:id="@+id/radioButtonB"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:text="RadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButtonC"
+                android:textSize="18sp" />
+        </RadioGroup>
 
         <Space
             android:layout_width="match_parent"
@@ -37,14 +64,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="63dp">
-
-            <Button
-                android:text="@string/previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_prev"
-                android:layout_weight="1" />
+            android:layout_height="wrap_content">
 
             <Space
                 android:layout_width="wrap_content"
