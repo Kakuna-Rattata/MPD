@@ -1,29 +1,51 @@
 package com.example.shann.galleriesofjustice;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+
+    SharedPreferences preferences;
+
+    private Button btnLocate;
+    private  Button btnMuseum;
 
     private GoogleMap mMap;
 
     private GPSTracker gpsTracker;
     private Location mLocation;
     double latitude, longitude;
+    private Marker marker;
+
+    final double MuseumLat = 52.9508283;
+    final double MuseumLng = -1.144286;
+    final int MuseumZoom = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
+        preferences.edit().putBoolean("Tour Guide", true).apply();
+
+        btnLocate = (Button) findViewById(R.id.btnLocate);
+        btnMuseum = (Button) findViewById(R.id.btnMuseum);
 
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
@@ -35,6 +57,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        btnLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCurrentLocation();
+            }
+        });
+
+        btnMuseum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLocation(MuseumLat, MuseumLng, MuseumZoom);
+            }
+        });
     }
 
 
@@ -51,7 +87,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        goToLocation(52.9508283, -1.1455968 ,17);
+        goToLocation(MuseumLat, MuseumLng, MuseumZoom);
+        
+
+        //TODO: Set beacon locations, pins
     }
 
     private void goToLocation(double lat, double lng, int zoom) {
@@ -59,14 +98,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng latLng = new LatLng(lat, lng);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         mMap.moveCamera(cameraUpdate);
+
+        setMarker(mLocation.toString(), lat, lng, BitmapDescriptorFactory.fromResource(R.mipmap.ic_beacon_marker));
     }
 
     private void getCurrentLocation() {
 
-        LatLng museum = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(museum).title("You Are Here!"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(museum));
+        LatLng here = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(here).title("You Are Here!"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(here));
+
+        setMarker(mLocation.toString(), latitude, longitude, BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+    }
+
+    private void setMarker(String location, double lat, double lng, BitmapDescriptor bitmapDescriptor) {
+
+        if (marker != null) {
+            marker.remove();
+        }
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .title(mLocation.toString())
+                .icon(bitmapDescriptor)
+                .position(new LatLng(lat, lng))
+                .snippet("You Are Here!");
+        marker = mMap.addMarker(markerOptions);
     }
 }
-
-//https://www.google.co.uk/maps/place/Galleries+of+Justice+Museum/@52.9508283,-1.1455968,17z/data=!3m1!4b1!4m5!3m4!1s0x4879c3d44090a227:0x84c0983f112eb94c!8m2!3d52.9508283!4d-1.144286

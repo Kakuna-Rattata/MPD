@@ -89,7 +89,7 @@ public class AchievementsActivity extends AppCompatActivity {
         }
 
         if (preferences.getBoolean("Tour Guide", true)) {
-            //TODO: Unlocked when MapActivity started for first time
+            //  Unlocked when MapActivity started for first time
             imgButton3.setImageResource(R.drawable.trophy);
         } else {
             imgButton3.setImageResource(R.drawable.lock);

@@ -1,8 +1,10 @@
 package com.example.shann.galleriesofjustice;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 /**
  * Created by shann on 20/03/2017.
@@ -65,7 +68,21 @@ public class GPSTracker extends Service implements LocationListener {
             }
 
         } catch (Exception e) {
+            Log.e(getApplicationContext().toString(), "Exception", e);
+        }
 
+        if (location == null) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setTitle("Warning");
+            builder.setMessage("Location Not Found...!!!");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).show();
         }
 
         return location;
@@ -95,4 +112,5 @@ public class GPSTracker extends Service implements LocationListener {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
 }
