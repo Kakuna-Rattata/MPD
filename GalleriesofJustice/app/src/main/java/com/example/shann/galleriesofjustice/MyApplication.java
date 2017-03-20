@@ -8,7 +8,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.estimote.sdk.Beacon;
@@ -36,7 +35,7 @@ import java.util.UUID;
 *  Required for managing Beacons from any Activity in the app. */
 public class MyApplication extends Application {
 
-    SharedPreferences preferences;
+    SharedPreferences preferences = null;
 
     private BeaconManager beaconManager;
 
@@ -61,6 +60,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
+
         final Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -82,7 +83,6 @@ public class MyApplication extends Application {
                 beaconManager.startMonitoring(regionAll);
 
                 //  Unlocks "Adventurer" Achievement once beacon monitoring enabled
-                preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 preferences.edit().putBoolean("Adventurer", true).apply();
             }
         });

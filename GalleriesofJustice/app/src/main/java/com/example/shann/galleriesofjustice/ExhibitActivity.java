@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +50,7 @@ public class ExhibitActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called");
 
         // Set New Explorer Achievement for discovering Exhibit for first time
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
         preferences.edit().putBoolean("New Explorer", true).apply();
 
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);

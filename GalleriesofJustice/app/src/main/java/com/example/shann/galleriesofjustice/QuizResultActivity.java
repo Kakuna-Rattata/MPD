@@ -3,7 +3,6 @@ package com.example.shann.galleriesofjustice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -28,7 +27,7 @@ public class QuizResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_result);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
 
         textViewScore = (TextView) findViewById(R.id.textView_Score);
 

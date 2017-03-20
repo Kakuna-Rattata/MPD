@@ -1,6 +1,7 @@
 package com.example.shann.galleriesofjustice;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,12 +20,26 @@ import com.estimote.sdk.SystemRequirementsChecker;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    SharedPreferences preferences = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
+
+        if (preferences.getBoolean("firstrun", true)) {
+
+            preferences.edit().putBoolean("Quiz Master", false).commit();
+            preferences.edit().putBoolean("New Explorer", false).commit();
+            preferences.edit().putBoolean("Tour Guide", false).commit();
+            preferences.edit().putBoolean("Adventurer", false).commit();
+
+            preferences.edit().putBoolean("firstrun", false).commit();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,5 +136,15 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
+//
+//        if (preferences.getBoolean("firstrun", true)) {
+//
+//            preferences.edit().putBoolean("Quiz Master", false).commit();
+//            preferences.edit().putBoolean("New Explorer", false).commit();
+//            preferences.edit().putBoolean("Tour Guide", false).commit();
+//            preferences.edit().putBoolean("Adventurer", false).commit();
+//
+//            preferences.edit().putBoolean("firstrun", false).commit();
+//        }
     }
 }

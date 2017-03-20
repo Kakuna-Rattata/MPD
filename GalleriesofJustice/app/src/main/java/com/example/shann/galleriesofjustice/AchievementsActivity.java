@@ -2,7 +2,6 @@ package com.example.shann.galleriesofjustice;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,7 +29,8 @@ public class AchievementsActivity extends AppCompatActivity {
         imgButton3 = (ImageButton) findViewById(R.id.imgBtn3);
         imgButton4 = (ImageButton) findViewById(R.id.imgBtn4);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
         preferences.getAll();
 
         getAchievements();
@@ -77,21 +77,29 @@ public class AchievementsActivity extends AppCompatActivity {
         if (preferences.getBoolean("Quiz Master", true)) {
             //  Unlocked when 100% scored on a Quiz result
             imgButton1.setImageResource(R.drawable.trophy);
+        } else {
+            imgButton1.setImageResource(R.drawable.lock);
         }
 
         if (preferences.getBoolean("New Explorer", true)) {
             //  Unlocked when ExhibitActivity staretd for first time
             imgButton2.setImageResource(R.drawable.trophy);
+        } else {
+            imgButton2.setImageResource(R.drawable.lock);
         }
 
         if (preferences.getBoolean("Tour Guide", true)) {
             //TODO: Unlocked when MapActivity started for first time
             imgButton3.setImageResource(R.drawable.trophy);
+        } else {
+            imgButton3.setImageResource(R.drawable.lock);
         }
 
         if (preferences.getBoolean("Adventurer", true)) {
             //TODO: (on MainActivity Button Press) Unlocked when Interactive Tour activated
             imgButton4.setImageResource(R.drawable.trophy);
+        } else {
+            imgButton4.setImageResource(R.drawable.lock);
         }
 
 

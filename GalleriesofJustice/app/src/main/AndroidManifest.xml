@@ -43,7 +43,8 @@
         <activity
             android:name=".AchievementsActivity"
             android:label="Achievements"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
