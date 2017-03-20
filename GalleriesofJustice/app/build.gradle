@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.shann.galleriesofjustice"
         minSdkVersion 18
-        targetSdkVersion 25
+        targetSdkVersion 20 // required < 21 for notficiation small cion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

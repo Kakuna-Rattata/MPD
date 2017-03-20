@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.estimote.sdk.Beacon;
@@ -33,6 +35,8 @@ import java.util.UUID;
 /* Application: Base class for those who need to maintain global application state.
 *  Required for managing Beacons from any Activity in the app. */
 public class MyApplication extends Application {
+
+    SharedPreferences preferences;
 
     private BeaconManager beaconManager;
 
@@ -68,16 +72,18 @@ public class MyApplication extends Application {
 
         /*  iBeacon Monitoring :    */
         beaconManager = new BeaconManager(getApplicationContext());
+        // Set enter/exit event trigger duration and wait time to 5 seconds :
         beaconManager.setBackgroundScanPeriod(scanDurInterval, scanWaitInterval);
-        // Set enter/exit event trigger duration and wait time to 5 seconds
 
         // Create a beacon region defining monitoring geofence :
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
             public void onServiceReady() {
                 beaconManager.startMonitoring(regionAll);
-                //beaconManager.startMonitoring(regionLemon);
-                //beaconManager.startMonitoring(regionBeetroot);
+
+                //  Unlocks "Adventurer" Achievement once beacon monitoring enabled
+                preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                preferences.edit().putBoolean("Adventurer", true).apply();
             }
         });
 
@@ -189,6 +195,7 @@ public class MyApplication extends Application {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.g_logo)
                 .build();
         notification.defaults |= Notification.DEFAULT_SOUND;
         NotificationManager notificationManager =
@@ -196,6 +203,7 @@ public class MyApplication extends Application {
         notificationManager.notify(1, notification);
     }
 
+    //TODO: Remove getActivity method?
     public static Activity getActivity() {
         Class activityThreadClass = null;
         try {

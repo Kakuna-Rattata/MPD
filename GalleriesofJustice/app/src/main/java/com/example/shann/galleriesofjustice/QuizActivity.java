@@ -6,16 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -23,13 +28,14 @@ import static com.example.shann.galleriesofjustice.ExhibitActivity.REQUEST_CODE;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private TextView textViewQuestion;
+    private static final String TAG = "QuizActivity: ";
 
+    private TextView textViewQuestion;
+    private ImageView imageViewQuestion;
     private RadioGroup radioGroup;
     private RadioButton radioButtonA;
     private RadioButton radioButtonB;
     private RadioButton radioButtonC;
-
     private Button btnNext;
 
     private Bundle extras;
@@ -44,6 +50,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference dbRootRef;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +61,6 @@ public class QuizActivity extends AppCompatActivity {
         beaconKey = extras.getString("beaconKey");
 
         initialize();   // Initialize UI, objects, containers etc.
-
-        //getQuestion();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,47 +79,32 @@ public class QuizActivity extends AppCompatActivity {
 
     private void initialize() {
 
-        FirebaseApp.initializeApp(getApplicationContext());
-
         database = FirebaseDatabase.getInstance();
         dbRootRef = database.getReference();
-
         textViewQuestion = (TextView) findViewById(R.id.textView_question) ;
-
+        imageViewQuestion = (ImageView) findViewById(R.id.imageView_questionBg);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioButtonA = (RadioButton) findViewById(R.id.radioButtonA);
         radioButtonB = (RadioButton) findViewById(R.id.radioButtonB);
         radioButtonC = (RadioButton) findViewById(R.id.radioButtonC);
-
         btnNext = (Button) findViewById(R.id.btn_next);
+
+        FirebaseApp.initializeApp(getApplicationContext());
+        final StorageReference storageRef = storage.getReference();
+        final StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
 
         exhibit = new Exhibit();
         exhibit = (Exhibit) getIntent().getSerializableExtra("ExhibitObj");
 
         setTitle(exhibit.getTitle() + " Quiz");
+        textViewQuestion.setText(exhibit.getTitle());
+        String qImg = exhibit.getImage();
+        Glide.with(getApplicationContext())
+                .using(new FirebaseImageLoader())
+                .load(imagesRef.child(qImg))
+                .into(imageViewQuestion);
 
-        textViewQuestion.setText(exhibit.getTitle().toString());
-
-        questions = new ArrayList<Question>();
-
-        dbRootRef.child(beaconKey).child("questions").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //questions = new ArrayList<Question>();
-
-                for (DataSnapshot qChild : dataSnapshot.getChildren()) {
-                    questions.add(qChild.getValue(Question.class));
-                }
-
-                currentQuestionIndex = 0;
-                displayQuestion(currentQuestionIndex);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        getQuestion();
     }
 
     private void displayQuestion(int currentQuestionIndex) {
@@ -144,6 +134,7 @@ public class QuizActivity extends AppCompatActivity {
             resultIntent.putExtra("beaconKey", beaconKey);
             resultIntent.putExtra("ExhibitObj", exhibit);
             resultIntent.putExtra("score", score);
+            resultIntent.putExtra("questionList", questions);
 
             startActivityForResult(resultIntent, REQUEST_CODE);
         }
@@ -162,28 +153,28 @@ public class QuizActivity extends AppCompatActivity {
         return questions.get(currentQuestionIndex).isCorrectAnswer(answer);
     }
 
-    protected Question getQuestion() {
+    protected void getQuestion() {
+
+        questions = new ArrayList<Question>();
 
         dbRootRef.child(beaconKey).child("questions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //questions = new ArrayList<Question>();
 
                 for (DataSnapshot qChild : dataSnapshot.getChildren()) {
                     questions.add(qChild.getValue(Question.class));
                 }
 
-                currentQuestionIndex = 1;
+                currentQuestionIndex = 0;
                 displayQuestion(currentQuestionIndex);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
 
-        return null;
     }
 
     @Override

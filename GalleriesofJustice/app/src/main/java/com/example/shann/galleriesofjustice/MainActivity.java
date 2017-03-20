@@ -98,6 +98,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_achievements) {
 
+            Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_settings) {

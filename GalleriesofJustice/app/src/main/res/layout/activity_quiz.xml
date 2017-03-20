@@ -11,74 +11,105 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.shann.galleriesofjustice.QuizActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView_question"
-            android:layout_weight="0.41"
-            android:textSize="24sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.13" />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="286dp"
-            android:id="@+id/radioGroup">
-
-            <RadioButton
-                android:text="RadioButton"
-                android:layout_width="357dp"
-                android:layout_height="94dp"
-                android:id="@+id/radioButtonA"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:text="RadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="94dp"
-                android:id="@+id/radioButtonB"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:text="RadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/radioButtonC"
-                android:textSize="18sp" />
-        </RadioGroup>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15" />
+        android:layout_below="@+id/textView_question">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    app:srcCompat="@drawable/galleries_of_justice_logo"
+                    android:id="@+id/imageView_questionBg"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:scaleType="centerCrop"
+                    android:cropToPadding="false"
+                    android:adjustViewBounds="false"
+                    android:alpha="0.7"
+                    android:layout_height="@dimen/exhibit_image_height" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/textView_question"
+                    android:contentDescription="question"
+                    android:text="Question Text"
+                    android:textColor="@android:color/white"
+                    android:layout_height="@dimen/exhibit_image_height"
+                    android:textSize="30sp"
+                    android:textStyle="normal|bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="@dimen/MainLogoPadding"
+                    android:paddingRight="@dimen/MainLogoPadding"
+                    android:paddingTop="@dimen/MainLogoPadding" />
+            </RelativeLayout>
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.88" />
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
 
-            <Button
-                android:text="@string/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_next"
-                android:layout_weight="1" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:id="@+id/radioGroup"
+                android:layout_weight="0.25">
+
+                <RadioButton
+                    android:text="RadioButton"
+                    android:layout_width="match_parent"
+                    android:id="@+id/radioButtonA"
+                    android:textSize="18sp"
+                    android:layout_height="65dp" />
+
+                <RadioButton
+                    android:text="RadioButton"
+                    android:layout_width="match_parent"
+                    android:id="@+id/radioButtonC"
+                    android:textSize="18sp"
+                    android:layout_height="65dp" />
+
+                <RadioButton
+                    android:text="RadioButton"
+                    android:layout_width="match_parent"
+                    android:id="@+id/radioButtonB"
+                    android:textSize="18sp"
+                    android:layout_height="65dp" />
+
+            </RadioGroup>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5.88" />
+
+                <Button
+                    android:text="@string/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_next"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

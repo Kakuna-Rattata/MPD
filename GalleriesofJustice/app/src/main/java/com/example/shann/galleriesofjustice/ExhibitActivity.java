@@ -2,8 +2,10 @@ package com.example.shann.galleriesofjustice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,19 +25,20 @@ import com.google.firebase.storage.StorageReference;
 
 public class ExhibitActivity extends AppCompatActivity {
 
-    private static final String TAG = "ExhibitActivity: ";
     public static final int REQUEST_CODE = 1;
+    private static final String TAG = "ExhibitActivity: ";
 
-    ImageView imageView;
-    TextView textViewTitle;
-    TextView textViewDesc;
-    Button buttonQuiz;
+    SharedPreferences preferences;
+
+    private ImageView imageView;
+    private TextView textViewTitle;
+    private TextView textViewDesc;
+    private Button buttonQuiz;
 
     //  Declare Firebase Database elements:
     private static final String FIREBASE_URL = "https://galleriesofjustice-a9d86.firebaseio.com/";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference dbRootRef = database.getReference();
-
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
     String beaconKey;
@@ -46,6 +49,10 @@ public class ExhibitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exhibit_activity);
 
         Log.d(TAG, "onCreate() called");
+
+        // Set New Explorer Achievement for discovering Exhibit for first time
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().putBoolean("New Explorer", true).apply();
 
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
         textViewTitle = (TextView) findViewById(R.id.textView_title);
@@ -59,7 +66,7 @@ public class ExhibitActivity extends AppCompatActivity {
         }
         Log.d(TAG, "beaconKey is: " + beaconKey);
 
-        // Reference to an image file in Firebase Storage
+        // Create Reference to the app's image file storage in Firebase Storage
         final StorageReference storageRef = storage.getReference();
         final StorageReference imagesRef = storageRef.child("GOJ_Image_Content");
 
@@ -89,7 +96,7 @@ public class ExhibitActivity extends AppCompatActivity {
                         }
                     }
 
-                    Glide.with(getApplicationContext() /* context */)
+                    Glide.with(getApplicationContext())
                             .using(new FirebaseImageLoader())
                             .load(imagesRef.child(imgName))
                             .into(imageView);
@@ -101,7 +108,6 @@ public class ExhibitActivity extends AppCompatActivity {
 
                 @Override
             public void onCancelled(DatabaseError databaseError) {
-
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });

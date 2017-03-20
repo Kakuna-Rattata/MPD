@@ -36,7 +36,9 @@
             android:layout_height="0dp"
             android:id="@+id/textView_Score"
             android:layout_weight="0.24"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:textStyle="normal|bold"
+            android:textAlignment="center" />
     </LinearLayout>
 
 </RelativeLayout>
