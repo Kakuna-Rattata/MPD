@@ -3,7 +3,7 @@ package com.example.shann.galleriesofjustice;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     SharedPreferences preferences;
 
@@ -30,11 +30,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private GPSTracker gpsTracker;
     private Location mLocation;
     double latitude, longitude;
-    private Marker marker;
+
+    private Marker museumMarker;
+    private Marker locatiomMarker;
 
     final double MuseumLat = 52.9508283;
     final double MuseumLng = -1.144286;
     final int MuseumZoom = 12;
+
+    private BitmapDescriptor museumIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
 
+        museumIcon = BitmapDescriptorFactory.fromResource(R.mipmap.ic_museum_pin);
+
+        //TODO: Error handling
         latitude = mLocation.getLatitude();
         longitude = mLocation.getLongitude();
 
@@ -73,7 +80,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -88,9 +94,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap = googleMap;
 
         goToLocation(MuseumLat, MuseumLng, MuseumZoom);
-        
-
-        //TODO: Set beacon locations, pins
+        museumMarker = setMarker("Galleries of Justice Museum", MuseumLat, MuseumLng);
+        //museumMarker.setSnippet("Galleries of Justice Museum");
+        museumMarker.setIcon(museumIcon);
     }
 
     private void goToLocation(double lat, double lng, int zoom) {
@@ -98,30 +104,29 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng latLng = new LatLng(lat, lng);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         mMap.moveCamera(cameraUpdate);
-
-        setMarker(mLocation.toString(), lat, lng, BitmapDescriptorFactory.fromResource(R.mipmap.ic_beacon_marker));
     }
 
     private void getCurrentLocation() {
 
         LatLng here = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(here).title("You Are Here!"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(here));
 
-        setMarker(mLocation.toString(), latitude, longitude, BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        if (locatiomMarker != null) { locatiomMarker.remove(); }
+        locatiomMarker = setMarker("You Are Here!", latitude, longitude);
+        //locatiomMarker.setSnippet("You Are Here!");
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(here));
     }
 
-    private void setMarker(String location, double lat, double lng, BitmapDescriptor bitmapDescriptor) {
+    private Marker setMarker(String location, double lat, double lng) {
 
-        if (marker != null) {
-            marker.remove();
-        }
+        Marker marker = null;
 
         MarkerOptions markerOptions = new MarkerOptions()
-                .title(mLocation.toString())
-                .icon(bitmapDescriptor)
-                .position(new LatLng(lat, lng))
-                .snippet("You Are Here!");
+                .title(location)
+                .position(new LatLng(lat, lng));
+
         marker = mMap.addMarker(markerOptions);
+
+        return marker;
     }
 }
+// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)

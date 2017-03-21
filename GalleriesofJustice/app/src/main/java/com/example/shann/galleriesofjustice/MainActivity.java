@@ -103,10 +103,12 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_exhibitions) {
-            //TODO: info_ExhibitionsActivity
+            Intent intent = new Intent(MainActivity.this, info_ExhibitionsActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
-            //TODO: info_eventsActivity
+            Intent intent = new Intent(MainActivity.this, info_EventsActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_map) {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
@@ -114,6 +116,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_tour) {
             //TODO: get current activity on top if ExhibitActivity or QuizActivity/QuizResultActivity
+//            Intent intent = new Intent(MainActivity.this, info_TourActivity.class);
+//            startActivity(intent);
 
         } else if (id == R.id.nav_achievements) {
             Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);

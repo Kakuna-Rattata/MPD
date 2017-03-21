@@ -1,10 +1,8 @@
 package com.example.shann.galleriesofjustice;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -48,41 +46,27 @@ public class GPSTracker extends Service implements LocationListener {
                 if (isGPSEnabled) {
 
                     if (location == null) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
+                        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
                         if (locationManager != null ) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }
                     }
                 }
-                //  If Location not found from GPS, find from Network
-                if (location == null) {
+
+                if (location == null) {     //  If Location not found from GPS, find from Network
                     if (isNetworkEnabled) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
 
                         if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
                     }
                 }
             }
-
         } catch (Exception e) {
             Log.e(getApplicationContext().toString(), "Exception", e);
-        }
-
-        if (location == null) {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setTitle("Warning");
-            builder.setMessage("Location Not Found...!!!");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            }).show();
         }
 
         return location;
@@ -91,6 +75,11 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
+        //remove location callback:
+        locationManager.removeUpdates(this);
+
+//        latitude = location.getLatitude();
+//        longitude = location.getLongitude();
     }
 
     @Override

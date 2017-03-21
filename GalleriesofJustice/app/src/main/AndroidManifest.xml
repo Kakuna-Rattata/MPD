@@ -46,12 +46,12 @@
             android:name=".QuizResultActivity"
             android:label="Quiz Result"
             android:launchMode="singleTop"
-            android:parentActivityName=".ExhibitActivity"></activity>
+            android:parentActivityName=".ExhibitActivity" />
         <activity
             android:name=".AchievementsActivity"
             android:label="Achievements"
             android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -66,13 +66,32 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map">
+            android:label="@string/title_activity_map"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shann.galleriesofjustice.MainActivity" />
+        </activity>
+        <activity
+            android:name=".info_ExhibitionsActivity"
+            android:label="Exhibitions"
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shann.galleriesofjustice.MainActivity" />
+        </activity>
+        <activity
+            android:name=".info_EventsActivity"
+            android:label="Events"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shann.galleriesofjustice.MainActivity" />
         </activity>
     </application>
 
-</manifest>
-
-<!--Google Maps API Key AIzaSyCDqX968fu0TLDcB_uUTa30JgzqfaqiJiQ-->
+</manifest> <!-- Google Maps API Key AIzaSyCDqX968fu0TLDcB_uUTa30JgzqfaqiJiQ -->
