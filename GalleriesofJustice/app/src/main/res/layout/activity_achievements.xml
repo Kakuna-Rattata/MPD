@@ -13,40 +13,121 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="2">
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <ImageButton
-            android:layout_width="165dp"
-            app:srcCompat="@drawable/lock"
-            android:id="@+id/imgBtn1"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_height="150dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            app:srcCompat="@drawable/lock"
-            android:id="@+id/imgBtn2"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_height="150dp"
-            android:layout_width="165dp" />
+            <ImageButton
+                android:layout_width="150dp"
+                app:srcCompat="@drawable/lock"
+                android:id="@+id/imgBtn1"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_height="@dimen/achievements_imgbtn" />
 
-        <ImageButton
-            app:srcCompat="@drawable/lock"
-            android:id="@+id/imgBtn3"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_height="150dp"
-            android:layout_width="165dp" />
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView1"
+                android:textSize="18sp"
+                android:textAlignment="center" />
 
-        <ImageButton
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/lock"
-            android:id="@+id/imgBtn4"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_width="165dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gridview_space" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/gridview_padding">
+
+            <ImageButton
+                app:srcCompat="@drawable/lock"
+                android:id="@+id/imgBtn2"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_height="@dimen/achievements_imgbtn"
+                android:layout_width="@dimen/achievements_imgbtn"
+                android:cropToPadding="false" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gridview_space" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                app:srcCompat="@drawable/lock"
+                android:id="@+id/imgBtn3"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_height="@dimen/achievements_imgbtn"
+                android:layout_width="@dimen/achievements_imgbtn" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:textSize="18sp"
+                android:textAlignment="center" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gridview_space" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/gridview_padding">
+
+            <ImageButton
+                android:layout_height="@dimen/achievements_imgbtn"
+                app:srcCompat="@drawable/lock"
+                android:id="@+id/imgBtn4"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_width="@dimen/achievements_imgbtn"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gridview_space" />
+        </LinearLayout>
 
     </GridLayout>
+
 </RelativeLayout>

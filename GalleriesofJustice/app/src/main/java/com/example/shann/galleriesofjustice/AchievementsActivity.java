@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.shann.galleriesofjustice.MyApplication.getActivity;
@@ -18,6 +19,19 @@ public class AchievementsActivity extends AppCompatActivity {
     private ImageButton imgButton3;
     private ImageButton imgButton4;
 
+    private TextView textView1;
+    private TextView textView2;
+    private TextView textView3;
+    private TextView textView4;
+
+    private String achievement1;
+    private String achievement2;
+    private String achievement3;
+    private String achievement4;
+
+    //private HashMap<String,String> achievementMap;
+
+    private String toastText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +43,28 @@ public class AchievementsActivity extends AppCompatActivity {
         imgButton3 = (ImageButton) findViewById(R.id.imgBtn3);
         imgButton4 = (ImageButton) findViewById(R.id.imgBtn4);
 
+        textView1 = (TextView) findViewById(R.id.textView1);
+        textView2 = (TextView) findViewById(R.id.textView2);
+        textView3 = (TextView) findViewById(R.id.textView3);
+        textView4 = (TextView) findViewById(R.id.textView4);
+
+//        achievementMap = new HashMap<String, String>();
+//
+//        achievementMap.put(getString(R.string.achievements_quizmaster), getString(R.string.achievements_quizmaster_criteria));
+//        achievementMap.put(getString(R.string.achievements_newexplorer), getString(R.string.achievements_newexplorer_criteria));
+//        achievementMap.put(getString(R.string.achievements_tourguide), getString(R.string.achievements_tourguide_criteria));
+//        achievementMap.put(getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria));
+
+        toastText = "";
+
         //preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
         preferences.getAll();
+
+        textView1.setText(getString(R.string.achievements_quizmaster) );
+        textView2.setText(getString(R.string.achievements_newexplorer) );
+        textView3.setText(getString(R.string.achievements_tourguide) );
+        textView4.setText(getString(R.string.achievements_adventure) );
 
         getAchievements();
 
@@ -39,8 +72,14 @@ public class AchievementsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "Quiz Master: 100% correct answers achieved on an exhibit quiz",
-                            Toast.LENGTH_LONG).show();
+                if ( preferences.getBoolean(getString(R.string.achievements_quizmaster), false) == false ) {
+                    toastText = "Locked: " + getString(R.string.achievements_quizmaster_criteria);
+                } else {
+                    toastText = getString(R.string.achievements_quizmaster_criteria);
+                }
+
+                Toast.makeText(getActivity(), toastText,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -48,8 +87,14 @@ public class AchievementsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "New Explorer: Discovered first Exhibit",
-                        Toast.LENGTH_LONG).show();
+                if ( preferences.getBoolean(getString(R.string.achievements_newexplorer), false) == false ) {
+                    toastText = "Locked: " + getString(R.string.achievements_newexplorer_criteria);
+                } else {
+                    toastText = getString(R.string.achievements_newexplorer_criteria);
+                }
+
+                Toast.makeText(getActivity(), toastText,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -57,8 +102,14 @@ public class AchievementsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "Tour Guide: Used the Map",
-                        Toast.LENGTH_LONG).show();
+                if ( preferences.getBoolean(getString(R.string.achievements_tourguide), false) == false ) {
+                    toastText = "Locked: " + getString(R.string.achievements_tourguide_criteria);
+                } else {
+                    toastText = getString(R.string.achievements_tourguide_criteria);
+                }
+
+                Toast.makeText(getActivity(), toastText,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -66,7 +117,13 @@ public class AchievementsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(), "Adventurer: Started Interactive Tour",
+                if ( preferences.getBoolean(getString(R.string.achievements_adventure), false) == false ) {
+                    toastText = "Locked: " + getString(R.string.achievements_adventure_criteria);
+                } else {
+                    toastText = getString(R.string.achievements_adventure_criteria);
+                }
+
+                Toast.makeText(getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -74,28 +131,28 @@ public class AchievementsActivity extends AppCompatActivity {
 
     protected void getAchievements() {
 
-        if (preferences.getBoolean("Quiz Master", true)) {
+        if (preferences.getBoolean(getString(R.string.achievements_quizmaster), true)) {
             //  Unlocked when 100% scored on a Quiz result
             imgButton1.setImageResource(R.drawable.trophy);
         } else {
             imgButton1.setImageResource(R.drawable.lock);
         }
 
-        if (preferences.getBoolean("New Explorer", true)) {
+        if (preferences.getBoolean(getString(R.string.achievements_newexplorer), true)) {
             //  Unlocked when ExhibitActivity staretd for first time
             imgButton2.setImageResource(R.drawable.trophy);
         } else {
             imgButton2.setImageResource(R.drawable.lock);
         }
 
-        if (preferences.getBoolean("Tour Guide", true)) {
+        if (preferences.getBoolean(getString(R.string.achievements_tourguide), true)) {
             //  Unlocked when MapActivity started for first time
             imgButton3.setImageResource(R.drawable.trophy);
         } else {
             imgButton3.setImageResource(R.drawable.lock);
         }
 
-        if (preferences.getBoolean("Adventurer", true)) {
+        if (preferences.getBoolean(getString(R.string.achievements_adventure), true)) {
             //TODO: (on MainActivity Button Press) Unlocked when Interactive Tour activated
             imgButton4.setImageResource(R.drawable.trophy);
         } else {

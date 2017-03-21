@@ -85,7 +85,23 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this, info_HelpActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
+        if (id == R.id.action_about) {
+
+            Intent intent = new Intent(MainActivity.this, info_AboutActivity.class);
+            startActivity(intent);
+
             return true;
         }
 
@@ -122,15 +138,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_achievements) {
             Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
             startActivity(intent);
-
-        } else if (id == R.id.nav_help) {
-            //TODO: HelpActivity
-
-        } else if (id == R.id.nav_settings) {
-            //TODO: SettingsActivity
-
-        } else if (id == R.id.nav_about) {
-            //TODO: info_AboutActivity
 
         } else if (id == R.id.nav_feedback) {
             //TODO: Feedback feature

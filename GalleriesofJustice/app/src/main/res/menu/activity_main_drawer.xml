@@ -31,40 +31,9 @@
             android:title="Achievements" />
     </group>
 
-    <group android:id="@+id/menu_meta" android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_help_black_24dp"
-            android:title="Help" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_spanner_24dp"
-            android:title="Settings" />
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info_circle"
-            android:title="About" />
-    </group>
-
     <group android:id="@+id/menu_social" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_feedback"
             android:title="Send Feedback" />
     </group>
-
-
-
-<!--    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>-->
-
 </menu>
