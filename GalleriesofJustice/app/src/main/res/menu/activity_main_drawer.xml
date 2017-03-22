@@ -3,7 +3,7 @@
 
     <group android:id="@+id/menu_info" android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_main"
             android:icon="@drawable/ic_museum_24dp"
             android:title="Welcome" />
         <item

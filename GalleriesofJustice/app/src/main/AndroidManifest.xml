@@ -32,8 +32,8 @@
         </activity>
         <activity
             android:name=".ExhibitActivity"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".QuizActivity"
@@ -69,32 +69,32 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTask">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shann.galleriesofjustice.MainActivity" />
-        </activity>
-        <activity
-            android:name=".info_ExhibitionsActivity"
-            android:label="Exhibitions"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shann.galleriesofjustice.MainActivity" />
         </activity>
-        <activity
-            android:name=".info_EventsActivity"
-            android:label="Events"
-            android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shann.galleriesofjustice.MainActivity" />
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ExhibitionsFragment"-->
+            <!--android:label="Exhibitions"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:parentActivityName=".MainActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="com.example.shann.galleriesofjustice.MainActivity" />-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".EventsFragment"-->
+            <!--android:label="Events"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:parentActivityName=".MainActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="com.example.shann.galleriesofjustice.MainActivity" />-->
+        <!--</activity>-->
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -121,7 +121,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shann.galleriesofjustice.MainActivity" />
         </activity>
-
     </application>
 
 </manifest> <!-- Google Maps API Key AIzaSyCDqX968fu0TLDcB_uUTa30JgzqfaqiJiQ -->

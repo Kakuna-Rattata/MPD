@@ -197,4 +197,11 @@
     <string name="send_intent_email_to">GoJ@fakeemail.com</string>
     <string name="notification_leaving_text">Thanks for visiting!</string>
     <string name="notification_leaving_contents">Feel free to leave Feedback</string>
+    <string name="open_drawer">open navigation drawer</string>
+    <string name="close_drawer">close navigation drawer</string>
+    <string name="exhibitions_title">Exhibitions</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="events_title">Events</string>
 </resources>
