@@ -51,7 +51,13 @@ public class ExhibitActivity extends AppCompatActivity {
 
         // Set New Explorer Achievement for discovering Exhibit for first time
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
-        preferences.edit().putBoolean("New Explorer", true).apply();
+
+        if (preferences.getBoolean(getString(R.string.achievements_newexplorer), false) == false) {
+            preferences.edit().putBoolean(getString(R.string.achievements_newexplorer), true).apply();
+            Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
+            achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_newexplorer), getString(R.string.achievements_newexplorer_criteria), achievementIntent, this);
+        }
 
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
         textViewTitle = (TextView) findViewById(R.id.textView_title);

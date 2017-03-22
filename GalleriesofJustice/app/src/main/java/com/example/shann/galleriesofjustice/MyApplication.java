@@ -36,6 +36,7 @@ import java.util.UUID;
 public class MyApplication extends Application {
 
     SharedPreferences preferences = null;
+    boolean achievementFlag = false;
 
     private BeaconManager beaconManager;
 
@@ -82,8 +83,15 @@ public class MyApplication extends Application {
             public void onServiceReady() {
                 beaconManager.startMonitoring(regionAll);
 
-                //  Unlocks "Adventurer" Achievement once beacon monitoring enabled
-                preferences.edit().putBoolean("Adventurer", true).apply();
+                //  Unlocks "Adventurer" Achievement once beacon monitoring enabled (if not already unlocked)
+                if (preferences.getBoolean(getString(R.string.achievements_adventure), false) == false) {
+                    preferences.edit().putBoolean(getString(R.string.achievements_adventure), true).apply();
+                    //achievementFlag = true;
+                    Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
+                    achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria), achievementIntent);
+                    //achievementFlag = false;
+                }
             }
         });
 
@@ -96,9 +104,6 @@ public class MyApplication extends Application {
 
                 //  Get beacon's MajorMinor key
                 String beaconKey = String.format("%d:%d", region.getMajor(), region.getMinor());
-
-//              Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-//              mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 if (region == regionAll) {
                     showNotification(
@@ -203,7 +208,6 @@ public class MyApplication extends Application {
         notificationManager.notify(1, notification);
     }
 
-    //TODO: Remove getActivity method?
     public static Activity getActivity() {
         Class activityThreadClass = null;
         try {

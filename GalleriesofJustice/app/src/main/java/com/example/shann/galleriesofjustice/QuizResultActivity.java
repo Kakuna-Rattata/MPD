@@ -38,7 +38,13 @@ public class QuizResultActivity extends AppCompatActivity {
         //Exhibit exhibit = (Exhibit) extras.getSerializable("ExhibitObj");
         qList = (ArrayList<Question>) extras.get("questionList");
         if (score == qList.size()) {
-            preferences.edit().putBoolean("Quiz Master", true).apply();    // Set 100% Quiz Score Achievement
+
+            if (preferences.getBoolean(getString(R.string.achievements_quizmaster), false) == false) {
+                preferences.edit().putBoolean(getString(R.string.achievements_quizmaster), true).apply();    // Set 100% Quiz Score Achievement
+                Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
+                achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_quizmaster), getString(R.string.achievements_quizmaster_criteria), achievementIntent, this);
+            }
         }
     }
 

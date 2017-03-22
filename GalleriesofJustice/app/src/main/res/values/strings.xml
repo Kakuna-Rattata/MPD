@@ -185,4 +185,5 @@
     <string name="achievements_tourguide_criteria">Used the Map</string>
     <string name="achievements_adventure">Adventurer</string>
     <string name="achievements_adventure_criteria">Started Interactive Tour</string>
+    <string name="achievement_unlocked">Achievement Unlocked!</string>
 </resources>
