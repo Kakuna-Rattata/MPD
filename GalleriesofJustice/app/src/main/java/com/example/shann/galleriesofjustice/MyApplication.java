@@ -2,10 +2,6 @@ package com.example.shann.galleriesofjustice;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -36,7 +32,6 @@ import java.util.UUID;
 public class MyApplication extends Application {
 
     SharedPreferences preferences = null;
-    boolean achievementFlag = false;
 
     private BeaconManager beaconManager;
 
@@ -86,11 +81,9 @@ public class MyApplication extends Application {
                 //  Unlocks "Adventurer" Achievement once beacon monitoring enabled (if not already unlocked)
                 if (preferences.getBoolean(getString(R.string.achievements_adventure), false) == false) {
                     preferences.edit().putBoolean(getString(R.string.achievements_adventure), true).apply();
-                    //achievementFlag = true;
                     Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
                     achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria), achievementIntent);
-                    //achievementFlag = false;
+                    GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria), achievementIntent, getApplicationContext(), GlobalClass.NOTIFICATION_ACHIEVEMENT);
                 }
             }
         });
@@ -106,10 +99,12 @@ public class MyApplication extends Application {
                 String beaconKey = String.format("%d:%d", region.getMajor(), region.getMinor());
 
                 if (region == regionAll) {
-                    showNotification(
-                            "Welcome to The Galleries of Justice Museum",       // Title
-                            "Come inside and try our new interactive tour!",    // Message
-                            mainIntent                                          // Open on tap
+                    GlobalClass.showNotification(
+                            getString(R.string.welcome_notification_title),       // Title
+                            getString(R.string.welcome_notification_contents),    // Message
+                            mainIntent,                                           // Open this intent on tap
+                            getApplicationContext(),                              // Current context
+                            GlobalClass.NOTIFICATION_BEACON                       // Category of notification
                     );
 
                     beaconManager.startMonitoring(regionLemon);
@@ -132,17 +127,21 @@ public class MyApplication extends Application {
 
                             if (region == regionLemon) {
 
-                                showNotification(
-                                        "Prison Cells",
-                                        "Check out this exhibit",
-                                        exhibitIntent
+                                GlobalClass.showNotification(
+                                        getString(R.string.exhibit_prison_cells),
+                                        getString(R.string.exhibit_notification_contents),
+                                        exhibitIntent,
+                                        getApplicationContext(),
+                                        GlobalClass.NOTIFICATION_BEACON
                                 );
                             } else if (region == regionBeetroot) {
 
-                                showNotification(
-                                        "Courtroom",
-                                        "Check out this exhibit",
-                                        exhibitIntent
+                                GlobalClass.showNotification(
+                                        getString(R.string.exhibit_courtroom),
+                                        getString(R.string.exhibit_notification_contents),
+                                        exhibitIntent,
+                                        getApplicationContext(),
+                                        GlobalClass.NOTIFICATION_BEACON
                                 );
                             }
                         }
@@ -151,17 +150,21 @@ public class MyApplication extends Application {
 
                         if (region == regionLemon) {
 
-                            showNotification(
-                                    "Prison Cells",
-                                    "Check out this exhibit",
-                                    exhibitIntent
+                            GlobalClass.showNotification(
+                                    getString(R.string.exhibit_prison_cells),
+                                    getString(R.string.exhibit_notification_contents),
+                                    exhibitIntent,
+                                    getApplicationContext(),
+                                    GlobalClass.NOTIFICATION_BEACON
                             );
                         } else if (region == regionBeetroot) {
 
-                            showNotification(
-                                    "Courtroom",
-                                    "Check out this exhibit",
-                                    exhibitIntent
+                            GlobalClass.showNotification(
+                                    getString(R.string.exhibit_courtroom),
+                                    getString(R.string.exhibit_notification_contents),
+                                    exhibitIntent,
+                                    getApplicationContext(),
+                                    GlobalClass.NOTIFICATION_BEACON
                             );
                         }
                     }
@@ -173,11 +176,12 @@ public class MyApplication extends Application {
             public void onExitedRegion(Region region) {
 
                 if (region == regionAll) {
-                    showNotification(
+                    GlobalClass.showNotification(
                             "Thanks for visiting!",
                             "Feel free to leave Feedback",
-                            mainIntent
-                            //TODO: Feedback activity and replace above with
+                            mainIntent, //TODO: Feedback activity and replace with here
+                            getApplicationContext(),
+                            GlobalClass.NOTIFICATION_BEACON
                     );
 
                     Log.d("monitoring: exit", region.toString());
@@ -188,25 +192,25 @@ public class MyApplication extends Application {
 
     /* Add a notification to show up whenever
      * user enters the range of our monitored beacon. */
-    public void showNotification(String title, String message, Intent notificationIntent) {
-
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivities(
-                this, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification = new Notification.Builder(this)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.g_logo)
-                .build();
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
-    }
+//    public void showNotification(String title, String message, Intent notificationIntent) {
+//
+//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivities(
+//                this, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Notification notification = new Notification.Builder(this)
+//                .setSmallIcon(android.R.drawable.ic_dialog_info)
+//                .setContentTitle(title)
+//                .setContentText(message)
+//                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+//                .setSmallIcon(R.drawable.g_logo)
+//                .build();
+//        notification.defaults |= Notification.DEFAULT_SOUND;
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(1, notification);
+//    }
 
     public static Activity getActivity() {
         Class activityThreadClass = null;

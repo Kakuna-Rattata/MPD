@@ -12,7 +12,10 @@ import android.content.Intent;
 
 public class GlobalClass {
 
-    public static void showNotification(String title, String message, Intent notificationIntent, Context context) {
+    public static final int NOTIFICATION_BEACON = 1;
+    public static final int NOTIFICATION_ACHIEVEMENT = 2;
+
+    public static void showNotification(String title, String message, Intent notificationIntent, Context context, int notificationID) {
 
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(
@@ -29,6 +32,6 @@ public class GlobalClass {
         notification.defaults |= Notification.DEFAULT_SOUND;
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
+        notificationManager.notify(notificationID, notification);
     }
 }

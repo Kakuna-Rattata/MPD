@@ -43,7 +43,7 @@ public class QuizResultActivity extends AppCompatActivity {
                 preferences.edit().putBoolean(getString(R.string.achievements_quizmaster), true).apply();    // Set 100% Quiz Score Achievement
                 Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
                 achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_quizmaster), getString(R.string.achievements_quizmaster_criteria), achievementIntent, this);
+                GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_quizmaster), getString(R.string.achievements_quizmaster_criteria), achievementIntent, getApplicationContext(), GlobalClass.NOTIFICATION_ACHIEVEMENT);
             }
         }
     }

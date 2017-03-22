@@ -71,6 +71,8 @@ public class AchievementsActivity extends AppCompatActivity {
 
                 Toast.makeText(getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
+
+                imgButton1.setContentDescription("Selected " + getString(R.string.achievements_quizmaster) + " Achievement");
             }
         });
 

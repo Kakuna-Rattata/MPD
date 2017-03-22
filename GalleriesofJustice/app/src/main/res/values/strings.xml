@@ -186,4 +186,9 @@
     <string name="achievements_adventure">Adventurer</string>
     <string name="achievements_adventure_criteria">Started Interactive Tour</string>
     <string name="achievement_unlocked">Achievement Unlocked!</string>
+    <string name="welcome_notification_title">Welcome to The Galleries of Justice Museum</string>
+    <string name="welcome_notification_contents">Come inside and try our new interactive tour!</string>
+    <string name="exhibit_prison_cells">Prison Cells</string>
+    <string name="exhibit_courtroom">Courtroom</string>
+    <string name="exhibit_notification_contents">Check out this exhibit</string>
 </resources>

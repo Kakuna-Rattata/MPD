@@ -52,7 +52,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             preferences.edit().putBoolean(getString(R.string.achievements_tourguide), true).apply();
             Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
             achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_tourguide), getString(R.string.achievements_tourguide_criteria), achievementIntent, this);
+            GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_tourguide), getString(R.string.achievements_tourguide_criteria), achievementIntent, getApplicationContext(), GlobalClass.NOTIFICATION_ACHIEVEMENT);
         }
 
         btnLocate = (Button) findViewById(R.id.btnLocate);

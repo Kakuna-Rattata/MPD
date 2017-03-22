@@ -56,7 +56,12 @@ public class ExhibitActivity extends AppCompatActivity {
             preferences.edit().putBoolean(getString(R.string.achievements_newexplorer), true).apply();
             Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
             achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_newexplorer), getString(R.string.achievements_newexplorer_criteria), achievementIntent, this);
+            GlobalClass.showNotification(
+                    getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_newexplorer),
+                    getString(R.string.achievements_newexplorer_criteria),
+                    achievementIntent,
+                    getApplicationContext(),
+                    GlobalClass.NOTIFICATION_ACHIEVEMENT);
         }
 
         imageView = (ImageView) findViewById(R.id.imageView_Exhibit);
@@ -165,7 +170,8 @@ public class ExhibitActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        finish();
     }
 
     @Override

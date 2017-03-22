@@ -32,7 +32,9 @@
         </activity>
         <activity
             android:name=".ExhibitActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
+        </activity>
         <activity
             android:name=".QuizActivity"
             android:label="Quiz"
@@ -50,7 +52,7 @@
         <activity
             android:name=".AchievementsActivity"
             android:label="Achievements"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -67,7 +69,8 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shann.galleriesofjustice.MainActivity" />
@@ -75,7 +78,7 @@
         <activity
             android:name=".info_ExhibitionsActivity"
             android:label="Exhibitions"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -85,7 +88,7 @@
         <activity
             android:name=".info_EventsActivity"
             android:label="Events"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -103,6 +106,7 @@
         <activity
             android:name=".info_AboutActivity"
             android:label="@string/about_menutitle"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -111,6 +115,7 @@
         <activity
             android:name=".info_HelpActivity"
             android:label="@string/help_menutitle"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
