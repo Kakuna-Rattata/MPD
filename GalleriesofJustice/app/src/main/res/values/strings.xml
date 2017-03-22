@@ -191,4 +191,10 @@
     <string name="exhibit_prison_cells">Prison Cells</string>
     <string name="exhibit_courtroom">Courtroom</string>
     <string name="exhibit_notification_contents">Check out this exhibit</string>
+    <string name="share_chooser_text">Send us Feedback using...</string>
+    <string name="app_feedback_text">"Here is my feedback on the Galleries of Justice app: "</string>
+    <string name="send_intent_email_subject">Galleries of Justice App Feedback</string>
+    <string name="send_intent_email_to">GoJ@fakeemail.com</string>
+    <string name="notification_leaving_text">Thanks for visiting!</string>
+    <string name="notification_leaving_contents">Feel free to leave Feedback</string>
 </resources>

@@ -42,7 +42,8 @@
                         android:id="@+id/imgBtn1"
                         android:scaleType="fitCenter"
                         android:background="@android:color/transparent"
-                        android:layout_height="@dimen/achievements_imgbtn" />
+                        android:layout_height="@dimen/achievements_imgbtn"
+                        android:nextFocusDown="@+id/textView1"/>
                     <!--Lock image drawable source:-->
                     <!--https://www.iconfinder.com/icons/286675/lock_icon-->
 
@@ -54,7 +55,9 @@
                         android:textSize="24sp"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
-                        android:textStyle="normal|bold" />
+                        android:textStyle="normal|bold"
+                        android:nextFocusUp="@+id/imgBtn1"
+                        android:nextFocusDown="@+id/imgBtn2"/>
 
                     <Space
                         android:layout_width="match_parent"

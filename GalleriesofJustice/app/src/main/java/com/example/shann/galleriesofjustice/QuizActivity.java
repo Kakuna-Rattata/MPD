@@ -95,9 +95,8 @@ public class QuizActivity extends AppCompatActivity {
 
         exhibit = new Exhibit();
         exhibit = (Exhibit) getIntent().getSerializableExtra("ExhibitObj");
-
         setTitle(exhibit.getTitle() + " Quiz");
-        textViewQuestion.setText(exhibit.getTitle());
+        //textViewQuestion.setText(exhibit.getTitle());
         String qImg = exhibit.getImage();
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())
@@ -110,6 +109,9 @@ public class QuizActivity extends AppCompatActivity {
     private void displayQuestion(int currentQuestionIndex) {
 
         textViewQuestion.setText(questions.get(currentQuestionIndex).getQuestionText());
+
+        textViewQuestion.setContentDescription(textViewQuestion.getText());
+        textViewQuestion.announceForAccessibility(textViewQuestion.getText());
 
         radioButtonA.setText(questions.get(currentQuestionIndex).getChoiceA());
         radioButtonB.setText(questions.get(currentQuestionIndex).getChoiceB());

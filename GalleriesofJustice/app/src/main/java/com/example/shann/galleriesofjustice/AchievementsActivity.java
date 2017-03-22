@@ -57,6 +57,11 @@ public class AchievementsActivity extends AppCompatActivity {
         textView3.setText(getString(R.string.achievements_tourguide) );
         textView4.setText(getString(R.string.achievements_adventure) );
 
+        imgButton1.setContentDescription("Selected " + getString(R.string.achievements_quizmaster) + " Achievement");
+        imgButton2.setContentDescription("Selected " + getString(R.string.achievements_newexplorer) + " Achievement");
+        imgButton3.setContentDescription("Selected " + getString(R.string.achievements_tourguide) + " Achievement");
+        imgButton4.setContentDescription("Selected " + getString(R.string.achievements_adventure) + " Achievement");
+
         getAchievements();
 
         imgButton1.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +76,6 @@ public class AchievementsActivity extends AppCompatActivity {
 
                 Toast.makeText(getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
-
-                imgButton1.setContentDescription("Selected " + getString(R.string.achievements_quizmaster) + " Achievement");
             }
         });
 

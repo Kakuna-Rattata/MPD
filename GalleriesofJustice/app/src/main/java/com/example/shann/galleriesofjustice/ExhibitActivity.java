@@ -111,6 +111,7 @@ public class ExhibitActivity extends AppCompatActivity {
                             .load(imagesRef.child(imgName))
                             .into(imageView);
 
+                    setTitle(title);
                     textViewTitle.setText(title);
                     textViewDesc.setText(desc);
                 }

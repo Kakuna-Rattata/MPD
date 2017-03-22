@@ -14,13 +14,11 @@ public class QuizResultActivity extends AppCompatActivity {
     Bundle extras;
     SharedPreferences preferences;
 
+    private TextView textViewScoreLabel;
     private TextView textViewScore;
 
     private int score;
     private ArrayList<Question> qList;
-
-    //public Achievement achievement;
-    //public ArrayList<Achievement> achievements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +27,15 @@ public class QuizResultActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
 
+        textViewScoreLabel = (TextView) findViewById(R.id.textView_ScoreLabel);
         textViewScore = (TextView) findViewById(R.id.textView_Score);
 
         extras = getIntent().getExtras();
         score = getIntent().getIntExtra("score", 0);
         textViewScore.setText(String.valueOf(score));
+
+        textViewScoreLabel.announceForAccessibility(textViewScoreLabel.getText());
+        textViewScore.announceForAccessibility(textViewScore.getText());
 
         //Exhibit exhibit = (Exhibit) extras.getSerializable("ExhibitObj");
         qList = (ArrayList<Question>) extras.get("questionList");

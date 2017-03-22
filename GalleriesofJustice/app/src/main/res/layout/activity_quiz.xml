@@ -41,8 +41,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:id="@+id/textView_question"
-                    android:contentDescription="question"
-                    android:text="Question Text"
                     android:textColor="@android:color/white"
                     android:layout_height="@dimen/exhibit_image_height"
                     android:textSize="30sp"

@@ -34,7 +34,6 @@ public class MyApplication extends Application {
     SharedPreferences preferences = null;
 
     private BeaconManager beaconManager;
-
     long scanDurInterval = 5000;
     long scanWaitInterval = 3000;
 
@@ -177,9 +176,9 @@ public class MyApplication extends Application {
 
                 if (region == regionAll) {
                     GlobalClass.showNotification(
-                            "Thanks for visiting!",
-                            "Feel free to leave Feedback",
-                            mainIntent, //TODO: Feedback activity and replace with here
+                            getString(R.string.notification_leaving_text),
+                            getString(R.string.notification_leaving_contents),
+                            GlobalClass.notifyIntent,
                             getApplicationContext(),
                             GlobalClass.NOTIFICATION_BEACON
                     );
@@ -189,28 +188,6 @@ public class MyApplication extends Application {
             }
         });
     }
-
-    /* Add a notification to show up whenever
-     * user enters the range of our monitored beacon. */
-//    public void showNotification(String title, String message, Intent notificationIntent) {
-//
-//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivities(
-//                this, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        Notification notification = new Notification.Builder(this)
-//                .setSmallIcon(android.R.drawable.ic_dialog_info)
-//                .setContentTitle(title)
-//                .setContentText(message)
-//                .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
-//                .setSmallIcon(R.drawable.g_logo)
-//                .build();
-//        notification.defaults |= Notification.DEFAULT_SOUND;
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(1, notification);
-//    }
 
     public static Activity getActivity() {
         Class activityThreadClass = null;
