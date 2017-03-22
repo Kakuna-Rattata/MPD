@@ -12,5 +12,6 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="gridview_space">25dp</dimen>
     <dimen name="achievements_imgbtn">150dp</dimen>
-    <dimen name="gridview_padding">20dp</dimen>
+    <dimen name="gridview_padding">10dp</dimen>
+    <dimen name="map_space">20dp</dimen>
 </resources>

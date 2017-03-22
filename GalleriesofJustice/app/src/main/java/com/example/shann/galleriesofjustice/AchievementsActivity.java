@@ -29,8 +29,6 @@ public class AchievementsActivity extends AppCompatActivity {
     private String achievement3;
     private String achievement4;
 
-    //private HashMap<String,String> achievementMap;
-
     private String toastText;
 
     @Override
@@ -47,13 +45,6 @@ public class AchievementsActivity extends AppCompatActivity {
         textView2 = (TextView) findViewById(R.id.textView2);
         textView3 = (TextView) findViewById(R.id.textView3);
         textView4 = (TextView) findViewById(R.id.textView4);
-
-//        achievementMap = new HashMap<String, String>();
-//
-//        achievementMap.put(getString(R.string.achievements_quizmaster), getString(R.string.achievements_quizmaster_criteria));
-//        achievementMap.put(getString(R.string.achievements_newexplorer), getString(R.string.achievements_newexplorer_criteria));
-//        achievementMap.put(getString(R.string.achievements_tourguide), getString(R.string.achievements_tourguide_criteria));
-//        achievementMap.put(getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria));
 
         toastText = "";
 
@@ -134,8 +125,10 @@ public class AchievementsActivity extends AppCompatActivity {
         if (preferences.getBoolean(getString(R.string.achievements_quizmaster), true)) {
             //  Unlocked when 100% scored on a Quiz result
             imgButton1.setImageResource(R.drawable.trophy);
+            //  Trophy image drawable source: http://findicons.com/icon/596396/trophy
         } else {
             imgButton1.setImageResource(R.drawable.lock);
+            //  Lock image drawable source: https://www.iconfinder.com/icons/286675/lock_icon
         }
 
         if (preferences.getBoolean(getString(R.string.achievements_newexplorer), true)) {

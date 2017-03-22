@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "279075413478",
+    "firebase_url": "https://galleriesofjustice-a9d86.firebaseio.com",
+    "project_id": "galleriesofjustice-a9d86",
+    "storage_bucket": "galleriesofjustice-a9d86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279075413478:android:63a7ef330d501568",
+        "android_client_info": {
+          "package_name": "com.example.shann.galleriesofjustice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279075413478-8brr6pd10mb86cb1c4e7l2aefjc5ano1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shann.galleriesofjustice",
+            "certificate_hash": "632db5416971d85fbbb3f333ce5cfc474c71f830"
+          }
+        },
+        {
+          "client_id": "279075413478-sgqmhci7an4s0emejrkbelfpchdv65sf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApkiig3EB0K-8tGRWggnxfzV7MMZptMgE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279075413478-sgqmhci7an4s0emejrkbelfpchdv65sf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
