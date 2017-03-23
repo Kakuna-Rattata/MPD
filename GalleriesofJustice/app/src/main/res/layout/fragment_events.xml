@@ -1,51 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/fragment_events"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:weightSum="1">
 
-            <Space
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="31dp" />
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_exhibitions_intro"
+                android:text="@string/events_infolist"
+                android:padding="@dimen/padding_content_info_page"
+                android:textSize="@dimen/textsize_info_page"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/banquet"
+                android:id="@+id/imageView_exhibitions"
+                android:padding="@dimen/padding_content_info_page"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/selected_banquet"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false" />
 
-                <Space
-                    android:layout_width="42dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView"
-                    android:layout_weight="1" />
-
-                <Space
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:id="@+id/textView_2"
+                android:text=""
+                android:textSize="@dimen/textsize_info_page"
+                android:padding="@dimen/padding_content_info_page"/>
 
         </LinearLayout>
     </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/stat_sys_phone_call"
-        android:id="@+id/floatingActionButton" />
-</LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_exhibitions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,28 +15,37 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="201dp"
-                android:id="@+id/textView_1" />
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_exhibitions_intro"
+                android:text="@string/exhibitions_intro_text"
+                android:padding="@dimen/padding_content_info_page"
+                android:textSize="@dimen/textsize_info_page"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/robin_hood"
+                android:id="@+id/imageView_exhibitions"
+                android:padding="@dimen/padding_content_info_page"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/selected_robin_hood_statue"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="205dp"
-                android:id="@+id/textView_2" />
+                android:id="@+id/textView_2"
+                android:text=""
+                android:textSize="@dimen/textsize_info_page"
+                android:padding="@dimen/padding_content_info_page"/>
 
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/stat_sys_phone_call"
-        android:id="@+id/floatingActionButton3" />
 
 </RelativeLayout>

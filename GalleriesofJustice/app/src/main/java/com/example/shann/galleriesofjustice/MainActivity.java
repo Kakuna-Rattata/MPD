@@ -3,7 +3,9 @@ package com.example.shann.galleriesofjustice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.estimote.sdk.SystemRequirementsChecker;
 
@@ -38,7 +41,19 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.setCheckedItem(R.id.nav_main);
+
         displaySelectedScreen(R.id.nav_main);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton_call);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0115 952 0555"));
+                startActivity(callIntent);
+            }
+        });
 
 
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
@@ -106,36 +121,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-//        if (id == R.id.nav_home) {
-//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_exhibitions) {
-//            Intent intent = new Intent(MainActivity.this, info_ExhibitionsActivity.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_events) {
-//            Intent intent = new Intent(MainActivity.this, info_EventsActivity.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_map) {
-//            Intent intent = new Intent(MainActivity.this, MapActivity.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_tour) {
-//            //TODO: get current activity on top if ExhibitActivity or QuizActivity/QuizResultActivity
-////            Intent intent = new Intent(MainActivity.this, info_TourActivity.class);
-////            startActivity(intent);
-//
-//        } else if (id == R.id.nav_achievements) {
-//            Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
-//            startActivity(intent);
-//
-//        } else if (id == R.id.nav_feedback) {
-//            Context context = GlobalClass.getActivity();
-//            GlobalClass.onShareClick(context);
-//        }
 
         if (id == R.id.nav_map) {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);

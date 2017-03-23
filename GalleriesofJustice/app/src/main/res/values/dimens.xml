@@ -14,4 +14,6 @@
     <dimen name="achievements_imgbtn">150dp</dimen>
     <dimen name="gridview_padding">10dp</dimen>
     <dimen name="map_space">20dp</dimen>
+    <dimen name="textsize_info_page">20sp</dimen>
+    <dimen name="padding_content_info_page">15dp</dimen>
 </resources>

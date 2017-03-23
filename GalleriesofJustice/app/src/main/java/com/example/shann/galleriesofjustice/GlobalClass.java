@@ -20,7 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by shann on 22/03/2017.
+ * Created by N0499010 Shannon Hibbett on 22/03/2017.
+ *
+ * OnShareClick method code adapted from source :
+ * http://stackoverflow.com/questions/9730243/how-to-filter-specific-apps-for-action-send-intent-and-set-a-different-text-for
+ *
  */
 //TODO: cite code sources
 
