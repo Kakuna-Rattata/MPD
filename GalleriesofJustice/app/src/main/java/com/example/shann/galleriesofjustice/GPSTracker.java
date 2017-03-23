@@ -11,11 +11,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 /**
- * Created by shann on 20/03/2017.
+ * Created by N0499010 Shannon Hibbett on 20/03/2017.
+ *
+ * GPSTracker class code adapted from :
+ * http://wintechtutorials.com/blog/android-gps-location-manager-and-google-map-tutorial/
  */
 
 public class GPSTracker extends Service implements LocationListener {
@@ -24,7 +28,6 @@ public class GPSTracker extends Service implements LocationListener {
 
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
-    boolean canGetLocation = false;
 
     Location location;
     protected LocationManager locationManager;
@@ -34,15 +37,18 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     public Location getLocation() {
-
         try {
             locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
             isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
 
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if ( !(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    || !(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) ) {
 
+                ActivityCompat.requestPermissions(GlobalClass.getActivity(),
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        1);
+            } else {
                 if (isGPSEnabled) {
 
                     if (location == null) {
@@ -77,9 +83,6 @@ public class GPSTracker extends Service implements LocationListener {
 
         //remove location callback:
         locationManager.removeUpdates(this);
-
-//        latitude = location.getLatitude();
-//        longitude = location.getLongitude();
     }
 
     @Override

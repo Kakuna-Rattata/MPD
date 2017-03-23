@@ -37,14 +37,6 @@
                 android:adjustViewBounds="true"
                 android:cropToPadding="false" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="205dp"
-                android:id="@+id/textView_2"
-                android:text=""
-                android:textSize="@dimen/textsize_info_page"
-                android:padding="@dimen/padding_content_info_page"/>
-
         </LinearLayout>
     </ScrollView>
 

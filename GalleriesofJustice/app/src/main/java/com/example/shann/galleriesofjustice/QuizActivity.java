@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.FirebaseApp;
@@ -25,6 +24,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import static com.example.shann.galleriesofjustice.ExhibitActivity.REQUEST_CODE;
+
+/**
+ * Created by N0499010 Shannon Hibbett on 16/03/2017.
+ *
+ * Some Question and Quiz feature code adapted from tutorial https://www.youtube.com/watch?v=016QnvN5x4s
+ */
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -62,6 +67,20 @@ public class QuizActivity extends AppCompatActivity {
 
         initialize();   // Initialize UI, objects, containers etc.
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (radioGroup.getCheckedRadioButtonId() == -1) {
+                    //  No radiobuttons checked
+                    btnNext.setEnabled(false);
+                } else {
+                    // a radiobutton in the group is checked
+                    btnNext.setEnabled(true);
+                }
+            }
+        });
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,15 +98,16 @@ public class QuizActivity extends AppCompatActivity {
 
     private void initialize() {
 
-        database = FirebaseDatabase.getInstance();
-        dbRootRef = database.getReference();
-        textViewQuestion = (TextView) findViewById(R.id.textView_question) ;
-        imageViewQuestion = (ImageView) findViewById(R.id.imageView_questionBg);
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-        radioButtonA = (RadioButton) findViewById(R.id.radioButtonA);
-        radioButtonB = (RadioButton) findViewById(R.id.radioButtonB);
-        radioButtonC = (RadioButton) findViewById(R.id.radioButtonC);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        database            = FirebaseDatabase.getInstance();
+        dbRootRef           = database.getReference();
+
+        textViewQuestion    = (TextView) findViewById(R.id.textView_question) ;
+        imageViewQuestion   = (ImageView) findViewById(R.id.imageView_questionBg);
+        radioGroup          = (RadioGroup) findViewById(R.id.radioGroup);
+        radioButtonA        = (RadioButton) findViewById(R.id.radioButtonA);
+        radioButtonB        = (RadioButton) findViewById(R.id.radioButtonB);
+        radioButtonC        = (RadioButton) findViewById(R.id.radioButtonC);
+        btnNext             = (Button) findViewById(R.id.btn_next);
 
         FirebaseApp.initializeApp(getApplicationContext());
         final StorageReference storageRef = storage.getReference();
@@ -96,7 +116,6 @@ public class QuizActivity extends AppCompatActivity {
         exhibit = new Exhibit();
         exhibit = (Exhibit) getIntent().getSerializableExtra("ExhibitObj");
         setTitle(exhibit.getTitle() + " Quiz");
-        //textViewQuestion.setText(exhibit.getTitle());
         String qImg = exhibit.getImage();
         Glide.with(getApplicationContext())
                 .using(new FirebaseImageLoader())
@@ -122,7 +141,6 @@ public class QuizActivity extends AppCompatActivity {
 
     private void advanceQuestion() {
 
-        //currentQuestionIndex = (currentQuestionIndex + 1) % questions.size();
         currentQuestionIndex = (currentQuestionIndex + 1);
 
         if (currentQuestionIndex < questions.size()) {
@@ -148,14 +166,19 @@ public class QuizActivity extends AppCompatActivity {
         int id = radioGroup.getCheckedRadioButtonId();
 
         radioButton_selected = (RadioButton) findViewById(id);
-        if (radioButton_selected == radioButtonA) answer = "A";
-        if (radioButton_selected == radioButtonB) answer = "B";
-        if (radioButton_selected == radioButtonC) answer = "C";
+        if (radioButton_selected.isChecked() == true) {
+            btnNext.setEnabled(true);
+            if (radioButton_selected == radioButtonA) answer = "A";
+            if (radioButton_selected == radioButtonB) answer = "B";
+            if (radioButton_selected == radioButtonC) answer = "C";
+        }
 
         return questions.get(currentQuestionIndex).isCorrectAnswer(answer);
     }
 
     protected void getQuestion() {
+
+        btnNext.setEnabled(false);
 
         questions = new ArrayList<Question>();
 
@@ -191,4 +214,10 @@ public class QuizActivity extends AppCompatActivity {
         return intent;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        finish();
+    }
 }

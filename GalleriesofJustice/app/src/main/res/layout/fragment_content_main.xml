@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.shann.galleriesofjustice.MainActivity"
-    android:background="@mipmap/entrance">
+    android:background="@drawable/entrance">
 
     <ScrollView
         android:layout_width="match_parent"

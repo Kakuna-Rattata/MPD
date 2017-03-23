@@ -24,9 +24,7 @@ import java.util.Map;
  *
  * OnShareClick method code adapted from source :
  * http://stackoverflow.com/questions/9730243/how-to-filter-specific-apps-for-action-send-intent-and-set-a-different-text-for
- *
  */
-//TODO: cite code sources
 
 public class GlobalClass {
 
@@ -37,22 +35,25 @@ public class GlobalClass {
 
     public static void showNotification(String title, String message, Intent notificationIntent, Context context, int notificationID) {
 
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivities(
-                context, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+        if ( notificationIntent != null ) {
 
-        Notification notification = new Notification.Builder(context)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.g_logo)
-                .build();
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notificationID, notification);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivities(
+                    context, 0, new Intent[] {notificationIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            Notification notification = new Notification.Builder(context)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.drawable.g_logo)
+                    .build();
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+            notificationManager.notify(notificationID, notification);
+        }
     }
 
     public static void onShareClick(Context context) {
@@ -84,7 +85,6 @@ public class GlobalClass {
             } else if (packageName.contains("twitter")
                     || packageName.contains("facebook")
                     || packageName.contains("mms")
-                //|| packageName.contains("android.gm")
                     ) {
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName(packageName, ri.activityInfo.name));
@@ -92,10 +92,6 @@ public class GlobalClass {
                 intent.setType("text/plain");
                 if (packageName.contains("twitter")) {
                     intent.putExtra(Intent.EXTRA_TEXT, resources.getString(R.string.app_feedback_text));
-                } else if (packageName.contains("facebook")) {
-                    // Warning: Facebook IGNORES our text. They say "These fields are intended for users to express themselves. Pre-filling these fields erodes the authenticity of the user voice."
-                    // One workaround is to use the Facebook SDK to post, but that doesn't allow the user to choose how they want to share. We can also make a custom landing page, and the link
-                    // will show the <meta content ="..."> text from that page with our link in Facebook.
                     intent.putExtra(Intent.EXTRA_TEXT, resources.getString(R.string.app_feedback_text));
                 } else if (packageName.contains("mms")) {
                     intent.putExtra(Intent.EXTRA_TEXT, resources.getString(R.string.app_feedback_text));

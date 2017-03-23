@@ -1,10 +1,12 @@
 package com.example.shann.galleriesofjustice;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,18 +14,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.estimote.sdk.SystemRequirementsChecker;
+import static com.example.shann.galleriesofjustice.GlobalClass.getActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferences preferences = null;
+
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +43,12 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_main);
 
         displaySelectedScreen(R.id.nav_main);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton_call);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,10 +59,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
-
         if (preferences.getBoolean("firstrun", true)) {
+
+            preferences.edit().putBoolean(getString(R.string.tour_activated), false).commit();
 
             preferences.edit().putBoolean(getString(R.string.achievements_quizmaster), false).commit();
             preferences.edit().putBoolean(getString(R.string.achievements_newexplorer), false).commit();
@@ -88,9 +92,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -123,18 +124,40 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_map) {
+            navigationView.clearFocus();
+            navigationView.setCheckedItem(R.id.nav_map);
+            //  Request enable GPS if disabled :
+            int off = 0;
+            try {
+                off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (off == 0) {
+                showDialogGPS();
+
+            } else {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_tour) {
-            //TODO: get current activity on top if ExhibitActivity or QuizActivity/QuizResultActivity
-//            Intent intent = new Intent(MainActivity.this, info_TourActivity.class);
-//            startActivity(intent);
+
         } else if (id == R.id.nav_achievements) {
+            navigationView.clearFocus();
+            navigationView.setCheckedItem(R.id.nav_achievements);
+
             Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_feedback) {
-            Context context = GlobalClass.getActivity();
+            navigationView.clearFocus();
+            navigationView.setCheckedItem(R.id.nav_feedback);
+
+            Context context = getActivity();
             GlobalClass.onShareClick(context);
+
         } else {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -152,12 +175,21 @@ public class MainActivity extends AppCompatActivity
         //  Init selected fragment object :
         switch (itemId) {
             case R.id.nav_main:
+                navigationView.clearFocus();
+                navigationView.setCheckedItem(R.id.nav_main);
+
                 fragment = new MainFragment();
                 break;
             case R.id.nav_exhibitions:
+                navigationView.clearFocus();
+                navigationView.setCheckedItem(R.id.nav_exhibitions);
+
                 fragment = new ExhibitionsFragment();
                 break;
             case R.id.nav_events:
+                navigationView.clearFocus();
+                navigationView.setCheckedItem(R.id.nav_events);
+
                 fragment = new EventsFragment();
                 break;
         }
@@ -173,20 +205,29 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        SystemRequirementsChecker.checkWithDefaultDialogs(this);
-//
-//        if (preferences.getBoolean("firstrun", true)) {
-//
-//            preferences.edit().putBoolean("Quiz Master", false).commit();
-//            preferences.edit().putBoolean("New Explorer", false).commit();
-//            preferences.edit().putBoolean("Tour Guide", false).commit();
-//            preferences.edit().putBoolean("Adventurer", false).commit();
-//
-//            preferences.edit().putBoolean("firstrun", false).commit();
-//        }
+    /**
+     * Show a dialog to the user requesting that GPS be enabled
+     */
+    private void showDialogGPS() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Enable GPS");
+        builder.setMessage("Please enable GPS");
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(
+                        new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        });
+        builder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
+
+

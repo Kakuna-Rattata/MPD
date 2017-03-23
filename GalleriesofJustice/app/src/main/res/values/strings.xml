@@ -209,4 +209,6 @@
     <string name="events_infolist">The Galleries of Justice Museum is the perfect venue for a unique and memorable experience. From birthdays to office Christmas parties, there is something for all kinds of special occasions including: Birthday parties Wedding Receptions Office Christmas parties Reunions Award ceremonies Graduation parties End of year proms Ghost Tour Suppers Terror Tour Suppers Medieval Sheriff’s Banquets Murder Mystery Nights Parties for any occasion</string>
     <string name="selected_banquet">Selected banquet</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="tour_activated">Tour activated</string>
+    <string name="request_gps_turn_on">Please turn GPS on in settings</string>
 </resources>

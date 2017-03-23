@@ -53,7 +53,6 @@ public class QuizResultActivity extends AppCompatActivity {
     @Override
     public Intent getParentActivityIntent() {
         extras = getIntent().getExtras();
-
         // Return to Exhibit Activity, restoring its previous state
         Intent intent = super.getParentActivityIntent();
         intent.putExtra("beaconKey", extras.getString("beaconKey"));

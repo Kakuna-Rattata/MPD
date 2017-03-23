@@ -1,5 +1,6 @@
 package com.example.shann.galleriesofjustice;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import static com.example.shann.galleriesofjustice.MyApplication.getActivity;
 
 public class AchievementsActivity extends AppCompatActivity {
 
@@ -48,7 +47,6 @@ public class AchievementsActivity extends AppCompatActivity {
 
         toastText = "";
 
-        //preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences = getSharedPreferences("com.example.shann.galleriesofjustice", MODE_PRIVATE);
         preferences.getAll();
 
@@ -74,7 +72,7 @@ public class AchievementsActivity extends AppCompatActivity {
                     toastText = getString(R.string.achievements_quizmaster_criteria);
                 }
 
-                Toast.makeText(getActivity(), toastText,
+                Toast.makeText(GlobalClass.getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -89,7 +87,7 @@ public class AchievementsActivity extends AppCompatActivity {
                     toastText = getString(R.string.achievements_newexplorer_criteria);
                 }
 
-                Toast.makeText(getActivity(), toastText,
+                Toast.makeText(GlobalClass.getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -104,7 +102,7 @@ public class AchievementsActivity extends AppCompatActivity {
                     toastText = getString(R.string.achievements_tourguide_criteria);
                 }
 
-                Toast.makeText(getActivity(), toastText,
+                Toast.makeText(GlobalClass.getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -119,7 +117,7 @@ public class AchievementsActivity extends AppCompatActivity {
                     toastText = getString(R.string.achievements_adventure_criteria);
                 }
 
-                Toast.makeText(getActivity(), toastText,
+                Toast.makeText(GlobalClass.getActivity(), toastText,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -151,12 +149,16 @@ public class AchievementsActivity extends AppCompatActivity {
         }
 
         if (preferences.getBoolean(getString(R.string.achievements_adventure), true)) {
-            //TODO: (on MainActivity Button Press) Unlocked when Interactive Tour activated
+            //  Unlocked when Interactive Tour activated (Beacon detected)
             imgButton4.setImageResource(R.drawable.trophy);
         } else {
             imgButton4.setImageResource(R.drawable.lock);
         }
+    }
 
-
+    @Override
+    public Intent getParentActivityIntent() {
+        Intent intent = super.getParentActivityIntent();
+        return intent;
     }
 }

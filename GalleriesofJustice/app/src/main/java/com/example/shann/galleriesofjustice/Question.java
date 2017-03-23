@@ -3,7 +3,7 @@ package com.example.shann.galleriesofjustice;
 import java.io.Serializable;
 
 /**
- * Created by shann on 16/03/2017.
+ * Created by N0499010 Shannon Hibbett on 16/03/2017.
  *
  * Some Question and Quiz feature code adapted from tutorial https://www.youtube.com/watch?v=016QnvN5x4s
  */

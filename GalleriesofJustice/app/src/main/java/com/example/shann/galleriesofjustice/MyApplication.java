@@ -1,30 +1,24 @@
 package com.example.shann.galleriesofjustice;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import static com.example.shann.galleriesofjustice.GlobalClass.getActivity;
+
 /*
- * Created by N0499010 on 24/02/2017.
+ * Created by N0499010 Shannon Hibbett on 24/02/2017.
  *
  * Beacon SDK and code from Estimote, tutorial :
  * http://developer.estimote.com/android/tutorial/part-1-setting-up/#prerequisites
- *
- * https://cloud.estimote.com/#/
  */
 
 /* Application: Base class for those who need to maintain global application state.
@@ -77,13 +71,6 @@ public class MyApplication extends Application {
             public void onServiceReady() {
                 beaconManager.startMonitoring(regionAll);
 
-                //  Unlocks "Adventurer" Achievement once beacon monitoring enabled (if not already unlocked)
-                if (preferences.getBoolean(getString(R.string.achievements_adventure), false) == false) {
-                    preferences.edit().putBoolean(getString(R.string.achievements_adventure), true).apply();
-                    Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
-                    achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_adventure), getString(R.string.achievements_adventure_criteria), achievementIntent, getApplicationContext(), GlobalClass.NOTIFICATION_ACHIEVEMENT);
-                }
             }
         });
 
@@ -106,6 +93,19 @@ public class MyApplication extends Application {
                             GlobalClass.NOTIFICATION_BEACON                       // Category of notification
                     );
 
+                    //  Unlocks "Adventurer" Achievement once beacon monitoring enabled (if not already unlocked)
+                    if (preferences.getBoolean(getString(R.string.achievements_adventure), false) == false) {
+                        preferences.edit().putBoolean(getString(R.string.achievements_adventure), true).apply();
+                        Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
+                        achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        GlobalClass.showNotification(
+                                getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_adventure),
+                                getString(R.string.achievements_adventure_criteria),
+                                achievementIntent,
+                                getApplicationContext(),
+                                GlobalClass.NOTIFICATION_ACHIEVEMENT);
+                    }
+
                     beaconManager.startMonitoring(regionLemon);
                     beaconManager.startMonitoring(regionBeetroot);
                 }
@@ -115,15 +115,13 @@ public class MyApplication extends Application {
                     exhibitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     exhibitIntent.putExtra("beaconKey", beaconKey);
 
-                    //getApplicationContext().getClass() != MainActivity.class
                     if ( getActivity() != null ) {
 
-                        if ( getActivity().getClass() != (QuizActivity.class) )  {
+                        if ( GlobalClass.getActivity().getClass() != (QuizActivity.class) )  {
 
                             startActivity(exhibitIntent);
                         }
                         else {
-
                             if (region == regionLemon) {
 
                                 GlobalClass.showNotification(
@@ -167,7 +165,6 @@ public class MyApplication extends Application {
                             );
                         }
                     }
-
                 }
             }
 
@@ -187,65 +184,5 @@ public class MyApplication extends Application {
                 }
             }
         });
-    }
-
-    public static Activity getActivity() {
-        Class activityThreadClass = null;
-        try {
-            activityThreadClass = Class.forName("android.app.ActivityThread");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Object activityThread = null;
-        try {
-            activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        Field activitiesField = null;
-        try {
-            activitiesField = activityThreadClass.getDeclaredField("mActivities");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        activitiesField.setAccessible(true);
-
-        Map<Object, Object> activities = null;
-        try {
-            activities = (Map<Object, Object>) activitiesField.get(activityThread);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        if(activities == null)
-            return null;
-
-        for (Object activityRecord : activities.values()) {
-            Class activityRecordClass = activityRecord.getClass();
-            Field pausedField = null;
-            try {
-                pausedField = activityRecordClass.getDeclaredField("paused");
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-            pausedField.setAccessible(true);
-            try {
-                if (!pausedField.getBoolean(activityRecord)) {
-                    Field activityField = activityRecordClass.getDeclaredField("activity");
-                    activityField.setAccessible(true);
-                    Activity activity = (Activity) activityField.get(activityRecord);
-                    return activity;
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
     }
 }

@@ -52,7 +52,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             preferences.edit().putBoolean(getString(R.string.achievements_tourguide), true).apply();
             Intent achievementIntent = new Intent(getApplicationContext(), AchievementsActivity.class);
             achievementIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            GlobalClass.showNotification(getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_tourguide), getString(R.string.achievements_tourguide_criteria), achievementIntent, getApplicationContext(), GlobalClass.NOTIFICATION_ACHIEVEMENT);
+            GlobalClass.showNotification(
+                    getString(R.string.achievement_unlocked) + ": " + getString(R.string.achievements_tourguide),
+                    getString(R.string.achievements_tourguide_criteria),
+                    achievementIntent,
+                    getApplicationContext(),
+                    GlobalClass.NOTIFICATION_ACHIEVEMENT);
         }
 
         btnLocate = (Button) findViewById(R.id.btnLocate);
@@ -63,9 +68,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         museumIcon = BitmapDescriptorFactory.fromResource(R.mipmap.ic_museum_pin);
 
-        //TODO: Error handling
-        latitude = mLocation.getLatitude();
-        longitude = mLocation.getLongitude();
+        //  Prevents crash when location not available :
+        try {
+            latitude = mLocation.getLatitude();
+            longitude = mLocation.getLongitude();
+        } catch(Exception ex) {
+            finish();
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -87,22 +96,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         goToLocation(MuseumLat, MuseumLng, MuseumZoom);
         museumMarker = setMarker("Galleries of Justice Museum", MuseumLat, MuseumLng);
-        //museumMarker.setSnippet("Galleries of Justice Museum");
         museumMarker.setIcon(museumIcon);
     }
 
@@ -119,7 +118,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (locatiomMarker != null) { locatiomMarker.remove(); }
         locatiomMarker = setMarker("You Are Here!", latitude, longitude);
-        //locatiomMarker.setSnippet("You Are Here!");
         mMap.moveCamera(CameraUpdateFactory.newLatLng(here));
     }
 
@@ -136,4 +134,3 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return marker;
     }
 }
-// BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)

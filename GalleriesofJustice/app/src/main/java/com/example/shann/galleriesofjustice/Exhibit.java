@@ -3,7 +3,7 @@ package com.example.shann.galleriesofjustice;
 import java.io.Serializable;
 
 /**
- * Created by shann on 16/03/2017.
+ * Created by N0499010 Shannon Hibbett on 16/03/2017.
  */
 
 public class Exhibit  implements Serializable {
